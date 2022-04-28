@@ -3,26 +3,26 @@ import featuredProjects from './featured';
 import projects from './projects';
 
 module.exports = {
-  email: 'jrgarciadev@gmail.com',
+  email: 'sidmirza4@gmail.com',
   featuredProjects,
   projects,
-  skills: ['JavaScript', 'TypeScript', 'React Native', 'React', 'Next.js', 'GraphQL'],
+  skills: ['JavaScript', 'TypeScript', 'NestJS', 'React', 'Next.js', 'MongoDB'],
   socialMedia: [
     {
       name: 'GitHub',
-      url: 'https://github.com/jrgarciadev',
+      url: 'https://github.com/sidmirza4',
     },
     {
       name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/jrgarciadev/',
+      url: 'https://www.linkedin.com/in/sidmirza4/',
     },
     {
       name: 'Instagram',
-      url: 'https://www.instagram.com/jrgarciadev',
+      url: 'https://www.instagram.com/sidmirza4',
     },
     {
       name: 'Twitter',
-      url: 'https://twitter.com/jrgarciadev',
+      url: 'https://twitter.com/sidmirza4',
     },
   ],
 

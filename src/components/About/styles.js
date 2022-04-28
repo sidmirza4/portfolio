@@ -78,6 +78,7 @@ export const StyledPic = styled.div`
     }
     .img {
       object-fit: cover;
+      object-position: top;
       max-width: 100%;
       position: relative;
       border-radius: ${(props) => props.theme.borderRadius};

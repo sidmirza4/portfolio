@@ -1,30 +1,30 @@
 /* eslint-disable max-len */
 module.exports = [
   {
-    title: 'NextUI',
-    cover: '/nextui.png',
-    github: 'https://github.com/nextui-org/nextui',
-    external: 'https://nextui.org',
+    title: 'MusicGemz',
+    cover: '/musicgemz.png',
+    github: 'https://github.com/sidmirza4/MusicGemz',
+    external: 'https://music-gemz.vercel.app',
     descriptionHtml:
-      'React UI library with SSR support, fully customizable, responsive adaptative components, dark mode support, beautiful, modern and fast. <a target="_blank" rel="noreferrer" href="https://nextui.org">Go there</a> ',
-    techs: ['React', 'Typescript', 'Styled JSX'],
+      'A decentralized music sharing application built on Polygon, using the latest web3 technologies like Hardhat, NextJS and Material UI <a target="_blank" rel="noreferrer" href="https://music-gemz.vercel.app">Go there</a> ',
+    techs: ['Solidity', 'Next.js', 'Typescript', 'Material UI'],
   },
   {
-    title: 'Devcover',
-    cover: '/devcover.jpg',
-    github: 'https://github.com/jrgarciadev/dev-cover',
-    external: 'https://devcover.me',
+    title: 'Forkify',
+    cover: '/forkify.png',
+    github: 'https://github.com/sidmirza4/Forkify',
+    external: 'https://forkify4.vercel.app/',
     descriptionHtml:
-      'I won the <a target="_blank" rel="noreferrer" href="https://vercel.com">Vercel</a> & <a target="_blank" rel="noreferrer" href="https://hashnode.com">Hashnode</a> <a target="_blank" rel="noreferrer" href="https://townhall.hashnode.com/vercelhashnode-hackathon-winners">Hackaton</a> with this project which is the easiest way to generate a developer portfolio. Devcover collects the developer data from Github, Hashnode and Dev.to sites to build a great porfolio just with their Github username <a target="_blank" rel="noreferrer" href="https://blog.jrgarciadev.com/devcover-easiest-way-to-generate-a-developer-portfolio">Read blog</a> ',
-    techs: ['React', 'Javascript', 'Vercel'],
+      'A web application that allows you to search for recipes and save them to your own personal cookbook. <a target="_blank" rel="noreferrer" href="https://forkify4.vercel.app/">Go there</a>',
+    techs: ['Javascript', 'Webpack', 'Vercel'],
   },
   {
-    title: 'React Iconly',
-    cover: '/react-iconly.png',
-    github: 'https://github.com/jrgarciadev/react-iconly',
-    external: 'https://react-iconly.jrgarciadev.com',
+    title: 'Natours',
+    cover: '/natours.png',
+    github: 'https://github.com/sidmirza4/Natours',
+    external: 'https://natours4.herokuapp.com',
     descriptionHtml:
-      'Beautiful and pixel perfect React Icon Library, <a target="_blank" rel="noreferrer" href="https://piqodesign.gumroad.com/l/iconly">Iconly</a> is one of the options that is being used by designers and developers today, so I decided to create a library for React / Next.js / Gatsby that facilitates its use and that also allows us to customize any icon according to our needs.  <a target="_blank" rel="noreferrer" href="https://dev.to/jrgarciadev/beautiful-and-pixel-perfect-react-icon-library-2fnd">Blog Post</a>',
-    techs: ['React', 'Library', 'Icons'],
+      'Natours is a web application to find the best tour for you and your friends. <a target="_blank" rel="noreferrer" href="https://natours4.herokuapp.com/">Go there</a>',
+    techs: ['Javascript', 'Node', 'SASS'],
   },
 ];
