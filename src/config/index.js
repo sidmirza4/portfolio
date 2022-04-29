@@ -33,7 +33,7 @@ module.exports = {
     },
     {
       name: 'Blog',
-      url: 'https://blog.jrgarciadev.com',
+      url: 'https://blog.mirzashahid.com/',
     },
     {
       name: 'Work',
