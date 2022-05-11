@@ -3,8 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Icon } from '@components/Icons';
 import { socialMedia } from '@config';
 import { srConfig } from '@config/sr';
-import Image from 'next/image';
-import { StyledFooter, StyledSocialLinks, StyledMadeWith, StyledCredit } from './styles';
+import { StyledFooter, StyledSocialLinks, StyledCredit } from './styles';
 
 const Footer = () => {
   const revealContainer = useRef(null);
@@ -29,12 +28,12 @@ const Footer = () => {
         </ul>
       </StyledSocialLinks>
 
-      <StyledMadeWith>
+      {/* <StyledMadeWith>
         <p>Made with</p>
         <a rel="noreferrer" target="_blank" href="https://nextjs.org/">
           <Image src="/nextjs-white-logo.svg" width={100} height={100} />
         </a>
-      </StyledMadeWith>
+      </StyledMadeWith> */}
 
       <StyledCredit tabindex="-1">
         <a rel="noreferrer" target="_blank" href="https://github.com/bchiang7/v4">
