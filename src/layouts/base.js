@@ -35,16 +35,17 @@ const BaseLayout = ({ children }) => {
         <meta property="og:title" content="Mohd Shahid | Web & Mobile developer" />
         <meta property="og:locale" content="en" />
         <meta property="og:url" content="https://mirzashahid.com" />
+        <meta property="og:url" content="https://sidmirza.com" />
         <meta
           name="description"
-          content="Hello! I'm Junior, a Software Developer based in Buenos Aires, Argentina. I enjoy creating beautiful and reliable applications for internet and phones. My goal is to always build scalable products and performant experiences."
+          content="Hello! I'm Mohd Shahid, a Software Developer based in New Delhi, India. I enjoy creating beautiful and reliable applications for internet and phones. My goal is to always build scalable products and performant experiences."
         />
         <meta
           name="keywords"
           content="Developer, Javascript, Freelancer, React, Typescript, NextJS, NestJS, MongoDB, React Developer"
         />
-        <meta property="og:image" content="https://mirzashahid.com/avatar.jpeg" />
-        <meta property="twitter:image" content="https://mirzashahid.com/avatar.jpeg" />
+        <meta property="og:image" content="https://mirzashahid.com/avatar.JPG" />
+        <meta property="twitter:image" content="https://mirzashahid.com/avatar.JPG" />
       </Head>
       {children}
     </div>
