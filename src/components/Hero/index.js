@@ -18,7 +18,7 @@ const Hero = () => {
   const three = <StyledBigTitle slate>I build web and mobile apps.</StyledBigTitle>;
   const four = (
     <p>
-      I&apos;m a software developer based in New Delhi, India, specializing in building exceptional
+      I&apos;m a software developer based in New Delhi, India, well-versed in building exceptional
       websites and mobile applications, and everything in between.
     </p>
   );

@@ -32,16 +32,16 @@ module.exports = {
       url: '/#about',
     },
     {
-      name: 'Blog',
-      url: 'https://blog.mirzashahid.com/',
-    },
-    {
       name: 'Work',
       url: '/#projects',
     },
     {
       name: 'Contact',
       url: '/#contact',
+    },
+    {
+      name: 'Blog',
+      url: 'https://blog.mirzashahid.com/',
     },
   ],
   colors: {

@@ -1,6 +1,14 @@
 /* eslint-disable max-len */
 module.exports = [
   {
+    title: 'Nawvel',
+    cover: '/nawvel.png',
+    external: 'https://nawvel.com',
+    descriptionHtml:
+      'A community of makers and creators that became #2 product of the day on Product Hunt <a target="_blank" rel="noreferrer" href="https://nawvel.com">Go there</a> ',
+    techs: ['Next.js', 'Typescript', 'Material UI', 'Nest.js', 'MongoDB'],
+  },
+  {
     title: 'MusicGemz',
     cover: '/musicgemz.png',
     github: 'https://github.com/sidmirza4/MusicGemz',
