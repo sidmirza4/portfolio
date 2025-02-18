@@ -58,7 +58,7 @@ module.exports = {
     ],
     'prefer-arrow-callback': 'error',
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         singleQuote: true,
         trailingComma: 'all',

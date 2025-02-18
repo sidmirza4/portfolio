@@ -74,3 +74,33 @@ export const NumberedHeading = styled.h2`
     }
   `}
 `;
+
+// Row Component
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: ${(props) => props.justify || 'flex-start'};
+  align-items: ${(props) => props.align || 'stretch'};
+  flex-wrap: ${(props) => props.wrap || 'nowrap'};
+  gap: ${(props) => props.gap || '0'};
+  width: ${(props) => props.width || '100%'};
+  height: ${(props) => props.height || 'auto'};
+  padding: ${(props) => props.padding || '0'};
+  margin: ${(props) => props.margin || '0'};
+  background-color: ${(props) => props.bgColor || 'transparent'};
+`;
+
+// Column Component
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: ${(props) => props.justify || 'flex-start'};
+  align-items: ${(props) => props.align || 'stretch'};
+  flex-wrap: ${(props) => props.wrap || 'nowrap'};
+  gap: ${(props) => props.gap || '0'};
+  width: ${(props) => props.width || '100%'};
+  height: ${(props) => props.height || 'auto'};
+  padding: ${(props) => props.padding || '0'};
+  margin: ${(props) => props.margin || '0'};
+  background-color: ${(props) => props.bgColor || 'transparent'};
+`;
