@@ -1,10 +1,11 @@
 /* eslint-disable global-require */
+/* eslint-disable react/jsx-one-expression-per-line */
 import { useEffect, useRef } from 'react';
 import { NumberedHeading } from '@common/styles';
-import Image from 'next/image';
 import { skills } from '@config';
 import { srConfig } from '@config/sr';
-import { StyledAboutSection, StyledText, StyledPic } from './styles';
+import { StyledAboutSection, StyledText } from './styles';
+import { Column } from '../../common/styles';
 
 const About = () => {
   const revealContainer = useRef(null);
@@ -18,30 +19,39 @@ const About = () => {
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
       <NumberedHeading>About Me</NumberedHeading>
-      <div className="inner">
-        <StyledText>
-          <div>
-            <p>Hello! I&apos;m Shahid, a Software Developer based in New Delhi, India.</p>
-            <p>
-              I enjoy creating beautiful and reliable applications for internet and phones.
-              <br />
-              My goal is to always build scalable products and performant experiences.
-            </p>
-            <br />
-            <p>Here are a few technologies I&apos;ve been working with recently:</p>
-          </div>
+      {/* <div className="inner"> */}
+      <StyledText>
+        <Column gap={6}>
+          <p>
+            Hello! I&apos;m Shahid, a Full Stack Software Engineer with 4+ years of experience
+            building scalable, high-impact web applications that drive business growth.
+          </p>
+          <p>
+            I specialize in crafting performant, user-centric solutions using modern technologies
+            like React, Next.js, Node.js, and AWS. My work has directly contributed to a 30%+
+            revenue increase for Delhivery by delivering scalable applications tailored to client
+            needs.
+          </p>
+          <p>
+            Whether it&apos;s building reusable UI component libraries, optimizing server response
+            times, or deploying cost-effective cloud solutions, I thrive on solving complex problems
+            and delivering results that matter.
+          </p>
+          <br />
+          <p>Here are a few technologies I&apos;ve been working with recently:</p>
+        </Column>
 
-          <ul className="skills-list">
-            {skills && skills.map((skill) => <li key={skill}>{skill}</li>)}
-          </ul>
-        </StyledText>
+        <ul className="skills-list">
+          {skills && skills.map((skill) => <li key={skill}>{skill}</li>)}
+        </ul>
+      </StyledText>
 
-        <StyledPic>
+      {/* <StyledPic>
           <div className="wrapper">
             <Image width={300} height={300} blu src="/avatar.JPG" alt="Avatar" className="img" />
           </div>
-        </StyledPic>
-      </div>
+        </StyledPic> */}
+      {/* </div> */}
     </StyledAboutSection>
   );
 };

@@ -10,7 +10,7 @@ const lightTheme = {
   text: {
     default: '#F4F4F4',
     reverse: '#0A1A2F',
-    accent: '#a3a8c3',
+    accent: '#E4E7FF	',
   },
   shadows: {
     default: '0 10px 30px -10px rgba(2, 12, 27, 0.7)',

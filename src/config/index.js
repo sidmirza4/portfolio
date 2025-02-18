@@ -6,7 +6,7 @@ module.exports = {
   email: 'sidmirza4@gmail.com',
   featuredProjects,
   projects,
-  skills: ['JavaScript', 'TypeScript', 'NestJS', 'React', 'Next.js', 'MongoDB'],
+  skills: ['Next.js', 'ReactJS', 'Typescript', 'AWS', 'Node.js', 'Python'],
   socialMedia: [
     {
       name: 'GitHub',
@@ -15,14 +15,6 @@ module.exports = {
     {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/sidmirza4/',
-    },
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/sidmirza4',
-    },
-    {
-      name: 'Twitter',
-      url: 'https://twitter.com/sidmirza4',
     },
   ],
 
@@ -41,7 +33,7 @@ module.exports = {
     },
     {
       name: 'Blog',
-      url: 'https://blog.mirzashahid.com/',
+      url: 'https://blog.sidmirza.com/',
     },
   ],
   colors: {
