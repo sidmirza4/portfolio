@@ -1,3 +1,4 @@
+/* eslint-disable lines-around-directive */
 /* eslint-disable react/prop-types */
 import { ThemeProvider } from 'styled-components';
 import Router from 'next/router';
