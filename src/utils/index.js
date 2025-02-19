@@ -1,3 +1,6 @@
+import { IS_PRODUCTION } from '@lib/constants';
+import * as gtag from '@lib/gtag';
+
 export const tint = (hex, amount) => {
   try {
     let R = parseInt(hex.substring(1, 3), 16);
@@ -42,4 +45,15 @@ export const hexa = (hex, alpha) => {
     console.log(error.message);
     return '';
   }
+};
+
+export const handleClickResume = () => {
+  if (IS_PRODUCTION) {
+    gtag.event({
+      action: 'click_resume',
+      category: 'resume',
+      label: 'user clicked on resume button',
+    });
+  }
+  window.open('/resume.pdf', '_blank');
 };
