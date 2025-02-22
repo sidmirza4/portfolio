@@ -10,9 +10,8 @@ const BaseLayout = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#181818" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
         <meta
@@ -26,15 +25,14 @@ const BaseLayout = ({ children }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Mohd Shahid | Web & Mobile developer" />
         <meta property="og:locale" content="en" />
-        <meta property="og:url" content="https://mirzashahid.com" />
         <meta property="og:url" content="https://sidmirza.com" />
         <meta
           name="description"
-          content="Hello! I'm Mohd Shahid, a Software Developer based in New Delhi, India. I enjoy creating beautiful and reliable applications for internet and phones. My goal is to always build scalable products and performant experiences."
+          content="Hi, I'm Mohd Shahid, a Software Engineer passionate about building scalable, high-performance applications for the web and mobile, delivering reliable and seamless user experiences."
         />
         <meta
           name="keywords"
-          content="Developer, Javascript, Freelancer, React, Typescript, NextJS, NestJS, MongoDB, React Developer"
+          content="Software Developer, Software Engineer, JavaScript, TypeScript, React, Next.js, NestJS, Node.js, MongoDB, Web Developer, Full-Stack Developer, Freelancer"
         />
         <meta property="og:image" content="https://sidmirza.com/avatar.JPG" />
         <meta property="twitter:image" content="https://sidmirza.com/avatar.JPG" />
