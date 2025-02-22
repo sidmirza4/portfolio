@@ -150,7 +150,7 @@ export const StyledProject = styled.div`
     font-size: clamp(24px, 5vw, 28px);
 
     @media (max-width: ${(props) => props.theme.breakpoints.md}) {
-      margin: 0 0 20px;
+      margin: 0;
     }
 
     @media (max-width: ${(props) => props.theme.breakpoints.md}) {
@@ -170,6 +170,7 @@ export const StyledProject = styled.div`
 
     @media (max-width: ${(props) => props.theme.breakpoints.md}) {
       padding: 20px 0;
+      padding-bottom: 25px;
       background-color: transparent;
       box-shadow: none;
 
