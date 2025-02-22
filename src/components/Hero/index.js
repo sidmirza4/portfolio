@@ -1,10 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
-import { getCalApi } from '@calcom/embed-react';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { NAV_DELAY, LOADER_DELAY } from '@lib/constants';
 import { StyledHeroSection, StyledBigTitle, StyledSubTitle } from './styles';
+import BookACall from '../../common/book-call';
 
 const Hero = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -28,30 +28,9 @@ const Hero = () => {
       smarter.
     </p>
   );
-  const five = (
-    <button
-      data-cal-namespace="30min"
-      data-cal-link="sidmirza4/30min"
-      data-cal-config='{"layout":"month_view"}'
-      type="button"
-      className="email-link"
-    >
-      Book a Call
-    </button>
-  );
+  const five = <BookACall />;
 
   const items = [one, two, three, four, five];
-
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: '30min' });
-      cal('ui', {
-        cssVarsPerTheme: { light: { 'cal-brand': '#0693e3' }, dark: { 'cal-brand': '#f4f4f4' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-    })();
-  }, []);
 
   return (
     <StyledHeroSection>

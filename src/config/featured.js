@@ -3,19 +3,19 @@ module.exports = [
   {
     title: 'Nawvel',
     cover: '/nawvel.png',
-    external: 'https://nawvel.com',
+    // external: 'https://nawvel.com',
     descriptionHtml:
-      'A community of makers and creators that became #2 product of the day on Product Hunt <a target="_blank" rel="noreferrer" href="https://nawvel.com">Go there</a> ',
+      'Nawvel – A full-stack platform enabling users to create chapters with links, which are automatically scraped for content, covers, titles, and summaries. Recognized as the #2 project of the day on Product Hunt.',
     techs: ['Next.js', 'Typescript', 'Material UI', 'Nest.js', 'MongoDB'],
   },
   {
-    title: 'MusicGemz',
-    cover: '/musicgemz.png',
-    github: 'https://github.com/sidmirza4/MusicGemz',
-    external: 'https://music-gemz.vercel.app',
+    title: 'Nexter',
+    cover: '/nexter.png',
+    github: 'https://github.com/sidmirza4/Nexter',
+    external: 'https://nexter04.netlify.app/',
     descriptionHtml:
-      'A decentralized music sharing application built on Polygon, using the latest web3 technologies like Hardhat, NextJS and Material UI <a target="_blank" rel="noreferrer" href="https://music-gemz.vercel.app">Go there</a> ',
-    techs: ['Solidity', 'Next.js', 'Typescript', 'Material UI'],
+      'Nexter – A modern and responsive real estate landing page designed to showcase properties with a clean UI, engaging visuals, and a user-friendly layout. Built with a focus on aesthetics and functionality. <a target="_blank" rel="noreferrer" href="https://nexter04.netlify.app/">Go there</a>',
+    techs: ['HTML', 'CSS', 'Javascript'],
   },
   {
     title: 'Forkify',
@@ -23,16 +23,16 @@ module.exports = [
     github: 'https://github.com/sidmirza4/Forkify',
     external: 'https://forkify4.vercel.app/',
     descriptionHtml:
-      'A web application that allows you to search for recipes and save them to your own personal cookbook. <a target="_blank" rel="noreferrer" href="https://forkify4.vercel.app/">Go there</a>',
-    techs: ['Javascript', 'Webpack', 'Vercel'],
+      'Forkify – A recipe search app that fetches recipes from an API, displays details with ingredients, and allows users to bookmark favorites for easy access. <a target="_blank" rel="noreferrer" href="https://forkify4.vercel.app/">Go there</a>',
+    techs: ['Javascript', 'CSS', 'Webpack'],
   },
   {
     title: 'Natours',
     cover: '/natours.png',
-    github: 'https://github.com/sidmirza4/Natours',
-    external: 'https://natours4.herokuapp.com',
+    github: 'https://github.com/sidmirza4/Natours-FE',
+    external: 'https://natours4.netlify.app/',
     descriptionHtml:
-      'Natours is a web application to find the best tour for you and your friends. <a target="_blank" rel="noreferrer" href="https://natours4.herokuapp.com/">Go there</a>',
-    techs: ['Javascript', 'Node', 'SASS'],
+      'Natours – A modern and visually engaging tour booking landing page with a responsive design, immersive animations, and a clean UI for showcasing travel packages. <a target="_blank" rel="noreferrer" href="https://natours4.netlify.app/">Go there</a>',
+    techs: ['HTML', 'SASS', 'Javascript'],
   },
 ];

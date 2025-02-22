@@ -4,6 +4,8 @@ import { email } from '@config';
 import { srConfig } from '@config/sr';
 import { NumberedHeading } from '@common/styles';
 import { StyledContactSection } from './styles';
+import BookACall from '../../common/book-call';
+import theme from '../../themes/common';
 
 const Contact = () => {
   const revealContainer = useRef(null);
@@ -15,18 +17,20 @@ const Contact = () => {
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
-      <NumberedHeading overline>What’s Next?</NumberedHeading>
+      <NumberedHeading overline>What&apos;s Next?</NumberedHeading>
 
       <h2 className="title">Get In Touch</h2>
 
       <p>
-        Want to collaborate, have a question or just want to say hi, my inbox is always open.
-        I&apos;ll try my best to get back to you!
+        If you&apos;re looking for someone who can add real value to your team, book a call at your
+        convenience. If the available times don&apos;t work for you, feel free to drop me an&nbsp;
+        <a href={`mailto:${email}`} style={{ color: theme.brand.primary }}>
+          email
+        </a>
+        —we&apos;ll make it happen!
       </p>
 
-      <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
-      </a>
+      <BookACall />
     </StyledContactSection>
   );
 };

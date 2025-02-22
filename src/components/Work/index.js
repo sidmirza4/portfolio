@@ -1,6 +1,9 @@
+/* eslint-disable global-require */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
+import { useEffect, useRef } from 'react';
+import { srConfig } from '@config/sr';
 import styled from 'styled-components';
 import { NumberedHeading } from '@common/styles'; // Import your numbered heading component
 import { handleClickResume } from '../../utils';
@@ -83,8 +86,16 @@ const ResumeButton = styled.a`
 `;
 
 const Work = () => {
+  const revealContainer = useRef(null);
+
+  useEffect(() => {
+    const ScrollReveal = require('scrollreveal');
+    const sr = ScrollReveal.default();
+    sr.reveal(revealContainer.current, srConfig());
+  }, []);
+
   return (
-    <section id="work">
+    <section id="work" ref={revealContainer}>
       <NumberedHeading>Where I&apos;ve Worked</NumberedHeading>
       {experienceData.map((exp, index) => (
         <Company key={index}>
