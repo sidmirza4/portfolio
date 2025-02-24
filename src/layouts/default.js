@@ -49,7 +49,7 @@ const DefaultLayout = ({ children }) => {
             <Main id="content" className={isHome ? 'fillHeight' : ''}>
               {children}
             </Main>
-            <Footer />
+            {/* <Footer /> */}
           </>
         )}
       </>

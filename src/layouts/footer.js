@@ -35,11 +35,11 @@ const Footer = () => {
         </a>
       </StyledMadeWith> */}
 
-      <StyledCredit tabindex="-1">
+      {/* <StyledCredit tabindex="-1">
         <a rel="noreferrer" target="_blank" href="https://github.com/bchiang7/v4">
           <div>Adapted from the Brittany Chiang Portfolio</div>
         </a>
-      </StyledCredit>
+      </StyledCredit> */}
     </StyledFooter>
   );
 };
