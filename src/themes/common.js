@@ -12,6 +12,7 @@ export default {
     primary: '#0693E3',
     secondary: '#0693E3',
     accent: '#5FC921',
+    border: '#0693E326',
   },
   fontSize: {
     xxs: '0.9rem',

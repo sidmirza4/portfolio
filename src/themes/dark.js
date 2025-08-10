@@ -6,6 +6,7 @@ const lightTheme = {
     default: '#120e26',
     defaultLight: '#1a1336',
     reverse: '#F4F4F4',
+    gray: '#ECEFF1',
   },
   text: {
     default: '#F4F4F4',
