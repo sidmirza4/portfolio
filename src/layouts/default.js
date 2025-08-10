@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Loader, Social, Email } from '@components';
+import { Loader, Social } from '@components';
 import { SkipToContentLink } from './styles';
 import Main from './main';
 import BaseLayout from './base';
 import Navbar from './navbar';
+import FloatingButton from '../components/ChatButton';
+import FloatingChat from '../components/ChatWidget';
 
 const DefaultLayout = ({ children }) => {
   const router = useRouter();
   const isHome = router.pathname === '/';
   const isBrowser = typeof window !== `undefined`;
   const [isLoading, setIsLoading] = useState(isHome);
+  const [isChatWidgetOpen, setIsChatWidgetOpen] = useState(false);
 
   useEffect(() => {
     if (isLoading || !isBrowser) {
@@ -34,6 +37,10 @@ const DefaultLayout = ({ children }) => {
 
   const handleFinish = () => setIsLoading(false);
 
+  const handleChatButtonClick = () => {
+    setIsChatWidgetOpen((prev) => !prev);
+  };
+
   return (
     <BaseLayout>
       <>
@@ -44,7 +51,9 @@ const DefaultLayout = ({ children }) => {
           <>
             <Navbar isHome={isHome} />
             <Social isHome={isHome} />
-            <Email isHome={isHome} />
+            {/* <Email isHome={isHome} /> */}
+            <FloatingButton isHome={isHome} onClick={handleChatButtonClick} />
+            <FloatingChat isOpen={isChatWidgetOpen} setIsOpen={setIsChatWidgetOpen} />
             <Main id="content" className={isHome ? 'fillHeight' : ''}>
               {children}
             </Main>
