@@ -14,6 +14,10 @@ const lightTheme = {
     accent: '#E4E7FF	',
     green: '#64ffda',
   },
+  chat: {
+    bgLight: '#eef4fa',
+    border: '#d0dae6',
+  },
   shadows: {
     default: '0 10px 30px -10px rgba(2, 12, 27, 0.7)',
     small: '0 10px 30px -10px rgba(2, 12, 27, 0.7)',

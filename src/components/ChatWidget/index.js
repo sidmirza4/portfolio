@@ -91,7 +91,8 @@ const MessageBubble = styled.div`
   padding: 10px 12px;
   border-radius: ${(p) => (p.$isUser ? '14px 14px 6px 14px' : '14px 14px 14px 6px')};
   align-self: ${(p) => (p.$isUser ? 'flex-end' : 'flex-start')};
-  background: ${(p) => (p.$isUser ? p.theme.bg.defaultLight : p.theme.bg.reverse)};
+  background: ${(p) => (p.$isUser ? p.theme.bg.defaultLight : p.theme.chat.bgLight)};
+  border: 1px solid ${(p) => (p.$isUser ? undefined : p.theme.chat.border)};
   color: ${(p) => (p.$isUser ? p.theme.text.default : p.theme.text.reverse)};
   font-size: 14px;
   line-height: 1.35;
@@ -130,7 +131,7 @@ const SendButton = styled.button`
 
 const FloatingChat = ({ isOpen, setIsOpen }) => {
   const [input, setInput] = useState('');
-  const { messages, sendMessage } = useChat();
+  const { messages, sendMessage, error } = useChat();
   const messagesRef = useRef(null);
   const chatRef = useRef(null);
 
@@ -151,7 +152,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
-  }, [messages.length]);
+  }, [messages.length, error]);
 
   return (
     <CSSTransition in={isOpen} timeout={200} classNames="chat" unmountOnExit>
@@ -177,6 +178,12 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
                 </MessageBubble>
               );
             })}
+
+            {error && (
+              <MessageBubble $isUser={false} style={{ background: '#fee2e2', color: '#b91c1c' }}>
+                ⚠️ Something went wrong. Please try again later.
+              </MessageBubble>
+            )}
           </ChatMessages>
 
           <ChatInputForm
