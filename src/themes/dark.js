@@ -13,6 +13,7 @@ const lightTheme = {
     reverse: '#0A1A2F',
     accent: '#E4E7FF	',
     green: '#64ffda',
+    secondary: '#8a8499',
   },
   chat: {
     bgLight: '#eef4fa',

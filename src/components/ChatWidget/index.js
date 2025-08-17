@@ -1,8 +1,14 @@
 import { useChat } from '@ai-sdk/react';
-import { MinusIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  FaceSmileIcon,
+  InformationCircleIcon,
+  MinusIcon,
+  XMarkIcon,
+  PaperAirplaneIcon,
+} from '@heroicons/react/24/outline';
 import { bool, func } from 'prop-types';
 import React, { useRef, useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import anime from 'animejs';
 
@@ -17,7 +23,7 @@ const closeAnim = keyframes`
 `;
 
 const Side = styled.div`
-  width: 320px;
+  width: 420px;
   position: fixed;
   bottom: 20px;
   right: 40px;
@@ -32,7 +38,7 @@ const Side = styled.div`
 `;
 
 const ChatWindow = styled.div`
-  min-height: 450px;
+  min-height: 500px;
   background-color: ${(p) => p.theme.bg.gray};
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
   border-radius: 10px;
@@ -75,6 +81,11 @@ const HeaderActions = styled.div`
   }
 `;
 
+const HeaderMessage = styled.div`
+  font-size: 12px;
+  color: ${(props) => props.theme.text.secondary};
+`;
+
 const ChatMessages = styled.div`
   flex: 1;
   padding: 12px;
@@ -101,32 +112,51 @@ const MessageBubble = styled.div`
 
 const ChatInputForm = styled.form`
   display: flex;
-  padding: 10px;
+  align-items: center;
+  padding: 8px 10px;
   border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
-  background: ${(p) => p.theme.bg.reverse};
+  background-color: white;
+  gap: 8px;
 `;
 
 const ChatInput = styled.input`
   flex: 1;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
+  padding: 8px 12px;
   font-size: 14px;
   outline: none;
+  &::placeholder: {
+    color: ${(p) => p.theme.text.secondary};
+  }
 `;
 
-const SendButton = styled.button`
-  margin-left: 8px;
-  background-color: ${(p) => p.theme.primary || p.theme.colors?.primary || '#2563eb'};
-  color: ${(p) => p.theme.button?.text || '#fff'};
-  padding: 8px 12px;
+const IconButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  &:hover {
-    opacity: 0.95;
-    transform: translateY(-1px);
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: ${(p) => p.theme.text.reverse};
   }
+
+  &:hover {
+    background: ${(p) => p.theme.bg?.gray || '#f3f4f6'};
+  }
+`;
+
+const Disclaimer = styled.div`
+  font-size: 11px;
+  color: ${(p) => p.theme.text?.muted || '#6b7280'};
+  text-align: center;
+  padding: 6px 10px;
+  border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
 `;
 
 const FloatingChat = ({ isOpen, setIsOpen }) => {
@@ -134,6 +164,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
   const { messages, sendMessage, error } = useChat();
   const messagesRef = useRef(null);
   const chatRef = useRef(null);
+  const theme = useTheme();
 
   useEffect(() => {
     if (isOpen && chatRef.current) {
@@ -159,12 +190,16 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
       <Side ref={chatRef}>
         <ChatWindow>
           <ChatHeader>
-            <HeaderTitle>Hello, I&apos;m ShAI</HeaderTitle>
+            <div>
+              <HeaderTitle>Hello, I&apos;m ShAI</HeaderTitle>
+              <HeaderMessage>Shahid's personal AI assistant</HeaderMessage>
+            </div>
             <HeaderActions>
               <MinusIcon onClick={() => setIsOpen(false)} />
               <XMarkIcon onClick={() => setIsOpen(false)} />
             </HeaderActions>
           </ChatHeader>
+          {/* <Disclaimer> ShAI is an AI assistant and may produce incorrect results.</Disclaimer> */}
 
           <ChatMessages ref={messagesRef}>
             {messages.map((message) => {
@@ -194,11 +229,26 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
             }}
           >
             <ChatInput
+              placeholder="Ask me anything about Shahid..."
+              className="chat-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me..."
+              name="message"
             />
-            <SendButton type="submit">Send</SendButton>
+            <style>
+              {`
+              .chat-input::placeholder {
+                color: ${theme.text.secondary};
+                opacity: 1;
+              }
+            `}
+            </style>
+            {/* <IconButton type="button">
+              <FaceSmileIcon />
+            </IconButton> */}
+            <IconButton type="submit">
+              <PaperAirplaneIcon />
+            </IconButton>
           </ChatInputForm>
         </ChatWindow>
       </Side>
