@@ -11,6 +11,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled, { keyframes, useTheme } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import anime from 'animejs';
+import TypingIndicator from '../TypingIndicator';
 
 const openAnim = keyframes`
   from { opacity: 0; transform: translateY(8px) scale(0.995); }
@@ -149,6 +150,12 @@ const IconButton = styled.button`
   &:hover {
     background: ${(p) => p.theme.bg?.gray || '#f3f4f6'};
   }
+
+  &:disabled {
+    background: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
 const Disclaimer = styled.div`
@@ -161,10 +168,13 @@ const Disclaimer = styled.div`
 
 const FloatingChat = ({ isOpen, setIsOpen }) => {
   const [input, setInput] = useState('');
-  const { messages, sendMessage, error } = useChat();
+  const { messages, sendMessage, error, status } = useChat();
+  const [showLoader, setShowLoader] = useState(false);
   const messagesRef = useRef(null);
   const chatRef = useRef(null);
   const theme = useTheme();
+
+  const isStreaming = status === 'streaming' || showLoader;
 
   useEffect(() => {
     if (isOpen && chatRef.current) {
@@ -185,6 +195,12 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
     }
   }, [messages.length, error]);
 
+  useEffect(() => {
+    if (status === 'streaming') {
+      setShowLoader(false);
+    }
+  }, [status]);
+
   return (
     <CSSTransition in={isOpen} timeout={200} classNames="chat" unmountOnExit>
       <Side ref={chatRef}>
@@ -203,16 +219,36 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
 
           <ChatMessages ref={messagesRef}>
             {messages.map((message) => {
+              const isAssistant = message.role === 'assistant';
+
               const text = message.parts
                 .filter((p) => p.type === 'text')
                 .map((p) => p.text)
                 .join(' ');
               return (
                 <MessageBubble key={message.id} $isUser={message.role === 'user'}>
-                  {text}
+                  {text === '' ? (
+                    <TypingIndicator>
+                      <span />
+                      <span />
+                      <span />
+                    </TypingIndicator>
+                  ) : (
+                    text
+                  )}
                 </MessageBubble>
               );
             })}
+
+            {/* {showLoader && (
+              <MessageBubble $isUser={false}>
+                <TypingIndicator>
+                  <span />
+                  <span />
+                  <span />
+                </TypingIndicator>
+              </MessageBubble>
+            )} */}
 
             {error && (
               <MessageBubble $isUser={false} style={{ background: '#fee2e2', color: '#b91c1c' }}>
@@ -224,7 +260,11 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
           <ChatInputForm
             onSubmit={(e) => {
               e.preventDefault();
+              if (isStreaming) return;
               if (input && input.trim()) sendMessage({ text: input });
+              setTimeout(() => {
+                setShowLoader(true);
+              }, 200);
               setInput('');
             }}
           >
@@ -234,6 +274,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               name="message"
+              autoComplete="off"
             />
             <style>
               {`
@@ -246,7 +287,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
             {/* <IconButton type="button">
               <FaceSmileIcon />
             </IconButton> */}
-            <IconButton type="submit">
+            <IconButton type="submit" disabled={isStreaming}>
               <PaperAirplaneIcon />
             </IconButton>
           </ChatInputForm>
