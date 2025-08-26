@@ -25,12 +25,6 @@ const CircularButton = styled.button`
   }
 `;
 
-const AssistantIcon = styled.svg`
-  width: 28px;
-  height: 28px;
-  fill: black;
-`;
-
 const OnlineDot = styled.div`
   height: 10px;
   width: 10px;
