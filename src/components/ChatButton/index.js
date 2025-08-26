@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 import Side from '../Side';
+import Image from 'next/image';
 
 const CircularButton = styled.button`
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: white;
+  bottom: 40px;
+  right: 40px;
+  width: 70px;
+  height: 70px;
+  background-color: ${(props) => props.theme.brand.primary};
   border: none;
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -30,16 +31,23 @@ const AssistantIcon = styled.svg`
   fill: black;
 `;
 
+const OnlineDot = styled.div`
+  height: 10px;
+  width: 10px;
+  background-color: ${(props) => props.theme.brand.accent};
+  border-radius: 100%;
+  border: ${(props) => `1px solid ${props.theme.brand.border}`};
+  position: absolute;
+  top: 6px;
+  right: 2px;
+`;
+
 const FloatingButton = ({ isHome, onClick }) => {
   return (
     <Side isHome={isHome} orientation="right">
       <CircularButton onClick={onClick}>
-        <AssistantIcon viewBox="0 0 24 24">
-          <path
-            d={`M12 2C6.48 2 2 5.58 2 10c0 2.65 1.72 4.98 4.41 6.39L5 22l5.16-3.11C10.76 18.96 11.37 19 12 19c5.52 
-                    0 10-3.58 10-8s-4.48-9-10-9zM7 10h2v2H7v-2zm4 0h2v2h-2v-2zm4 0h2v2h-2v-2z`}
-          />
-        </AssistantIcon>
+        <Image src="/avatar.png" height={60} width={50} />
+        <OnlineDot />
       </CircularButton>
     </Side>
   );
