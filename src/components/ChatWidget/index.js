@@ -1,16 +1,10 @@
 import { useChat } from '@ai-sdk/react';
-import {
-  FaceSmileIcon,
-  InformationCircleIcon,
-  MinusIcon,
-  XMarkIcon,
-  PaperAirplaneIcon,
-} from '@heroicons/react/24/outline';
-import { bool, func } from 'prop-types';
-import React, { useRef, useEffect, useState } from 'react';
-import styled, { keyframes, useTheme } from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
+import { MinusIcon, PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import anime from 'animejs';
+import { bool, func } from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import styled, { keyframes, useTheme } from 'styled-components';
 import TypingIndicator from '../TypingIndicator';
 
 const openAnim = keyframes`
@@ -158,13 +152,13 @@ const IconButton = styled.button`
   }
 `;
 
-const Disclaimer = styled.div`
-  font-size: 11px;
-  color: ${(p) => p.theme.text?.muted || '#6b7280'};
-  text-align: center;
-  padding: 6px 10px;
-  border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
-`;
+// const Disclaimer = styled.div`
+//   font-size: 11px;
+//   color: ${(p) => p.theme.text?.muted || '#6b7280'};
+//   text-align: center;
+//   padding: 6px 10px;
+//   border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
+// `;
 
 const FloatingChat = ({ isOpen, setIsOpen }) => {
   const [input, setInput] = useState('');
@@ -208,7 +202,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
           <ChatHeader>
             <div>
               <HeaderTitle>Hello, I&apos;m ShAI</HeaderTitle>
-              <HeaderMessage>Shahid's personal AI assistant</HeaderMessage>
+              <HeaderMessage>Shahid&apos;s personal AI assistant</HeaderMessage>
             </div>
             <HeaderActions>
               <MinusIcon onClick={() => setIsOpen(false)} />
@@ -219,7 +213,7 @@ const FloatingChat = ({ isOpen, setIsOpen }) => {
 
           <ChatMessages ref={messagesRef}>
             {messages.map((message) => {
-              const isAssistant = message.role === 'assistant';
+              // const isAssistant = message.role === 'assistant';
 
               const text = message.parts
                 .filter((p) => p.type === 'text')

@@ -1,9 +1,9 @@
-import styled, { keyframes } from 'styled-components';
-import { bool, func } from 'prop-types';
-import Side from '../Side';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import { bool, func } from 'prop-types';
+import { useEffect, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+import Side from '../Side';
 
 const wiggle = keyframes`
   0% { transform: rotate(0deg); }

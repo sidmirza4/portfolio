@@ -14,6 +14,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-plusplus': 'off',
     'no-nested-ternary': 'off',
+    'no-return-assign': 'off',
     'import/extensions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
