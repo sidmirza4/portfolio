@@ -15,6 +15,6 @@ export const StyledSideElement = styled.div`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
-    display: none;
+    display: ${(props) => (props.hideOnSmallScreen ? 'none' : 'block')};
   }
 `;

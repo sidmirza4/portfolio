@@ -119,7 +119,7 @@ const FloatingButton = ({ isHome, onClick }) => {
   };
 
   return (
-    <Side isHome={isHome} orientation="right">
+    <Side isHome={isHome} orientation="right" hideOnSmallScreen={false}>
       <>
         <CircularButton onClick={handleClick}>
           <Image src="/avatar.png" height={60} width={50} />

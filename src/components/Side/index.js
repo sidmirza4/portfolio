@@ -4,7 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { LOADER_DELAY } from '@lib/constants';
 import { StyledSideElement } from './styles';
 
-const Side = ({ children, isHome, orientation }) => {
+const Side = ({ children, isHome, orientation, hideOnSmallScreen = true }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Side = ({ children, isHome, orientation }) => {
   }, []);
 
   return (
-    <StyledSideElement orientation={orientation}>
+    <StyledSideElement orientation={orientation} hideOnSmallScreen={hideOnSmallScreen}>
       <TransitionGroup component={null}>
         {isMounted && (
           <CSSTransition classNames={isHome ? 'fade' : ''} timeout={isHome ? LOADER_DELAY : 0}>
@@ -32,6 +32,7 @@ Side.propTypes = {
   children: PropTypes.node.isRequired,
   isHome: PropTypes.bool,
   orientation: PropTypes.string,
+  hideOnSmallScreen: PropTypes.bool,
 };
 
 export default Side;

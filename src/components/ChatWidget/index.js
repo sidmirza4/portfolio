@@ -24,6 +24,17 @@ const Side = styled.div`
   right: 40px;
   z-index: 1000;
   color: ${(p) => p.theme.bg.reverse};
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 100dvw;
+    height: 100dvh;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    border-radius: 0;
+  }
+
   &.chat-enter {
     animation: ${openAnim} 180ms ease-out forwards;
   }
@@ -41,6 +52,13 @@ const ChatWindow = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    min-height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
 `;
 
 const ChatHeader = styled.div`
@@ -74,6 +92,15 @@ const HeaderActions = styled.div`
       transform: scale(0.96);
     }
   }
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    gap: 12px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const HeaderMessage = styled.div`
@@ -90,6 +117,12 @@ const ChatMessages = styled.div`
   gap: 10px;
   max-height: 400px;
   background: ${(p) => p.theme.chat?.bg || 'transparent'};
+
+  /* Mobile responsive styles */
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    max-height: calc(100vh - 120px);
+    padding: 16px;
+  }
 `;
 
 const MessageBubble = styled.div`
@@ -112,6 +145,12 @@ const ChatInputForm = styled.form`
   border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
   background-color: white;
   gap: 8px;
+
+  /* Mobile responsive styles */
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    padding: 12px 16px;
+    gap: 12px;
+  }
 `;
 
 const ChatInput = styled.input`
@@ -121,6 +160,12 @@ const ChatInput = styled.input`
   outline: none;
   &::placeholder: {
     color: ${(p) => p.theme.text.secondary};
+  }
+
+  /* Mobile responsive styles */
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 `;
 
@@ -149,6 +194,18 @@ const IconButton = styled.button`
     background: none;
     cursor: not-allowed;
     opacity: 0.5;
+  }
+
+  /* Mobile responsive styles */
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    padding: 10px;
+    min-width: 44px; /* Minimum touch target size */
+    min-height: 44px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
   }
 `;
 
