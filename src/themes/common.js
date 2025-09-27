@@ -2,6 +2,7 @@ import mixins from '@styles/mixins';
 
 export default {
   borderRadius: '12px',
+  borderRadiusFull: '9999px',
   borderRadiusButton: '2.375rem',
   hamburgerWidth: '3rem',
   fontFamily: {
