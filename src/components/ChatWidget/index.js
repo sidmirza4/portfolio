@@ -160,13 +160,16 @@ const MessageAvatar = styled.div`
 `;
 
 const MessageBubble = styled.div`
-  max-width: 80%;
-  border-radius: 0.5rem;
+  max-width: 70%;
+  border-radius: 1.2rem;
   padding: 0.75rem;
   word-break: break-word;
-  background-color: ${(p) => (p.$isBot ? p.theme.bg.chatHeader : 'transparent')};
+  background-color: ${(p) => (p.$isBot ? p.theme.bg.chatBotMessage : 'transparent')};
   color: ${(p) => p.theme.text.default};
-  border: ${(p) => (p.$isBot ? 'none' : `1px solid ${p.theme.brand.primary}`)};
+  border: ${(p) =>
+    p.$isBot
+      ? `1px solid color-mix(in oklab, ${p.theme.text.secondary} 20%, transparent)`
+      : `1px solid ${p.theme.brand.primary}`};
   animation: ${slideIn} 0.3s ease-out;
 `;
 
@@ -213,73 +216,79 @@ const ActionChipsContainer = styled.div`
 
 const ActionChipsWrapper = styled.div`
   display: flex;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
+  gap: 0.8rem;
+  padding-bottom: 0.8rem;
   min-width: max-content;
 `;
 
 const ActionChip = styled.button`
-  padding: 0.75rem 1rem;
-  border-radius: 9999px;
+  padding: 1rem;
+  border-radius: 1.6rem;
   font-size: ${(p) => p.theme.fontSize.small};
   font-weight: 500;
-  transition: all 0.15s ease;
-  min-height: 3rem;
+  transition: all 0.2s ease;
   white-space: nowrap;
   display: flex;
   align-items: center;
-  border: none;
   cursor: pointer;
   transform: scale(1);
   outline: none;
+  border: 1px solid;
 
   &:focus {
-    box-shadow: 0 0 0 2px ${(p) => p.theme.brand.primary}20;
+    box-shadow: 0 0 0 2px ${(p) => p.theme.brand.primary}50, 0 0 0 1px transparent;
+  }
+
+  &:hover {
+    transform: scale(1.02);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
 
   ${(p) =>
     p.$variant === 'primary'
       ? `
-    background-color: ${p.theme.brand.primary};
-    color: ${p.theme.text.default};
+    border-color: ${p.theme.brand.primary}30;
+    color: ${p.theme.brand.primary};
+    background-color: ${p.theme.brand.primary}05;
     
     &:hover {
-      background-color: #0578c7;
-      box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
+      border-color: ${p.theme.brand.primary}50;
+      background-color: ${p.theme.brand.primary}10;
     }
     
     &:active {
-      background-color: #0568b3;
+      background-color: ${p.theme.brand.primary}15;
     }
   `
       : `
-    background-color: ${p.theme.bg.chip};
-    color: ${p.theme.text.reverse};
+    border-color: ${p.theme.text.secondary}30;
+    color: ${p.theme.text.secondary};
+    background-color: transparent;
     
     &:hover {
-      background-color: #d1d8de;
-      box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.1);
+      border-color: ${p.theme.text.secondary}50;
+      color: ${p.theme.text.default};
+      background-color: ${p.theme.text.secondary}05;
     }
     
     &:active {
-      background-color: #c6cdd3;
+      background-color: ${p.theme.text.secondary}10;
     }
   `}
 `;
 
 const ComposerContainer = styled.div`
-  padding: 1rem;
+  padding: 1.6rem;
   border-top: 1px solid ${(p) => p.theme.brand.primary}20;
   background-color: ${(p) => p.theme.bg.chatHeader};
 `;
 
 const ComposerRow = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 0.75rem;
 `;
 
@@ -315,12 +324,13 @@ const InputContainer = styled.div`
 
 const MessageInput = styled.input`
   width: 100%;
-  padding: 0.75rem;
+  height: 4rem;
+  padding: 0 1.2rem;
   background-color: ${(p) => p.theme.bg.default};
   border: 1px solid ${(p) => p.theme.brand.border};
-  border-radius: 0.5rem;
+  border-radius: 1.2rem;
   color: ${(p) => p.theme.text.default};
-  font-size: ${(p) => p.theme.fontSize.small};
+  font-size: ${(p) => p.theme.fontSize.body};
   outline: none;
   transition: all 0.2s ease;
 
@@ -342,9 +352,9 @@ const SendButton = styled.button`
   background-color: ${(p) => p.theme.brand.primary};
   color: white;
   border: none;
-  border-radius: 0.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  border-radius: 1.2rem;
+  width: 4rem;
+  height: 4rem;
   padding: 0;
   display: flex;
   align-items: center;
@@ -354,7 +364,7 @@ const SendButton = styled.button`
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background-color: #0578c7;
+    background-color: ${(p) => p.theme.brand.primary};
   }
 
   &:disabled {
@@ -363,8 +373,8 @@ const SendButton = styled.button`
   }
 
   svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 2rem;
+    height: 2rem;
   }
 `;
 
@@ -508,7 +518,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
                 key={chip.id}
                 onClick={() => handleChipClick(chip.action)}
                 $variant={chip.variant}
-                aria-label={`Quick action: ${chip.label}`}
+                aria-label={`Suggested message: ${chip.label}`}
               >
                 {chip.label}
               </ActionChip>
@@ -519,9 +529,6 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
         {/* Composer */}
         <ComposerContainer>
           <ComposerRow>
-            <AttachButton aria-label="Attach file">
-              <Paperclip size={16} />
-            </AttachButton>
             <InputContainer>
               <MessageInput
                 ref={inputRef}

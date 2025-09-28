@@ -12,6 +12,7 @@ const lightTheme = {
     // New chat-specific backgrounds
     chatWidget: '#1e1a42',
     chatHeader: '#252047',
+    chatBotMessage: '#1a1336',
   },
   text: {
     default: '#F4F4F4',
