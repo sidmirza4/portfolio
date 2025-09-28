@@ -32,8 +32,7 @@ export default createGlobalStyle`
     display: flex;
     min-height: 100%;
     width: 100%;
-    box-sizing: border-box;
-    font-size: 62.5%; /*16px -> 100%   |   10px -> 62.5%   |   10px = 1rem*/
+    font-size: 62.5% !important; /*16px -> 100%   |   10px -> 62.5%   |   10px = 1rem*/
     line-height: 1.5;
     color: ${(props) => props.theme.text.default};
     padding: 0;

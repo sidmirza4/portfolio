@@ -6,8 +6,8 @@ import { SkipToContentLink } from './styles';
 import Main from './main';
 import BaseLayout from './base';
 import Navbar from './navbar';
-import FloatingButton from '../components/ChatButton';
-import FloatingChat from '../components/ChatWidget';
+import FloatingChatButton from '../components/ChatButton';
+import ChatWidget from '../components/ChatWidget';
 
 const DefaultLayout = ({ children }) => {
   const router = useRouter();
@@ -52,8 +52,12 @@ const DefaultLayout = ({ children }) => {
             <Navbar isHome={isHome} />
             <Social isHome={isHome} />
             {/* <Email isHome={isHome} /> */}
-            <FloatingButton isHome={isHome} onClick={handleChatButtonClick} />
-            <FloatingChat isOpen={isChatWidgetOpen} setIsOpen={setIsChatWidgetOpen} />
+            <FloatingChatButton isOpen={isChatWidgetOpen} onClick={handleChatButtonClick} />
+            <ChatWidget
+              isOpen={isChatWidgetOpen}
+              onClose={() => setIsChatWidgetOpen(false)}
+              onMinimize={() => setIsChatWidgetOpen(false)}
+            />
             <Main id="content" className={isHome ? 'fillHeight' : ''}>
               {children}
             </Main>

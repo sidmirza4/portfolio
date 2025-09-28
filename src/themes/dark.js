@@ -9,6 +9,9 @@ const lightTheme = {
     reverse: '#F4F4F4',
     gray: '#ECEFF1',
     chip: '#DCE3E9 ',
+    // New chat-specific backgrounds
+    chatWidget: '#1e1a42',
+    chatHeader: '#252047',
   },
   text: {
     default: '#F4F4F4',
@@ -27,6 +30,9 @@ const lightTheme = {
     medium: '0 20px 30px -15px rgba(2,12,27, 0.7)',
     large: '0 30px 60px rgba(0, 0, 0, 0.12) ',
     chip: '1px 1px 8px rgba(0, 0, 0, 0.1)',
+    // New button shadows
+    button: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    buttonHover: '0 6px 20px rgba(0, 0, 0, 0.2)',
   },
 };
 
