@@ -29,19 +29,11 @@ const pulseAnimation = keyframes`
 
 // Styled Components
 const ChatButtonContainer = styled.div`
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 1000;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 1rem;
-
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    bottom: 1.5rem;
-    right: 1.5rem;
-  }
+  margin-bottom: 2rem;
 `;
 
 const ChatButton = styled.button`

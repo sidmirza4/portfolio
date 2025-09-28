@@ -153,7 +153,7 @@ export const MessageAvatar = styled.div`
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
-  background-color: ${(p) => (p.$isBot ? p.theme.brand.primary : p.theme.text.secondary)};
+  background-color: ${(p) => (p.$isBot ? p.theme.brand.primary : p.theme.bg.userAvatar)};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,6 +218,7 @@ export const MessageInput = styled.input`
   border-radius: 1.2rem;
   background-color: ${(p) => p.theme.bg.default};
   color: ${(p) => p.theme.text.default};
+  font-family: ${(p) => p.theme.fontFamily.fontSans};
   font-size: ${(p) => p.theme.fontSize.body};
   outline: none;
   transition: all 0.2s ease;

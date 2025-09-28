@@ -120,6 +120,7 @@ export const ActionChipsWrapper = styled.div`
 export const ActionChip = styled.button`
   padding: 0.75rem 1.2rem;
   border-radius: 9rem;
+  font-family: ${(p) => p.theme.fontFamily.fontSans};
   font-size: ${(p) => p.theme.fontSize.small};
   font-weight: 500;
   transition: all 0.2s ease;

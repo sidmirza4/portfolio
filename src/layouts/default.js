@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Loader, Social } from '@components';
+import { Loader, Social, Side } from '@components';
 import { SkipToContentLink } from './styles';
 import Main from './main';
 import BaseLayout from './base';
@@ -52,7 +52,9 @@ const DefaultLayout = ({ children }) => {
             <Navbar isHome={isHome} />
             <Social isHome={isHome} />
             {/* <Email isHome={isHome} /> */}
-            <FloatingChatButton isOpen={isChatWidgetOpen} onClick={handleChatButtonClick} />
+            <Side isHome={isHome} orientation="right">
+              <FloatingChatButton isOpen={isChatWidgetOpen} onClick={handleChatButtonClick} />
+            </Side>
             <ChatWidget
               isOpen={isChatWidgetOpen}
               onClose={() => setIsChatWidgetOpen(false)}

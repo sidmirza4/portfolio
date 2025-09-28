@@ -13,6 +13,7 @@ const lightTheme = {
     chatWidget: '#1e1a42',
     chatHeader: '#252047',
     chatBotMessage: '#1a1336',
+    userAvatar: '#75708a',
   },
   text: {
     default: '#F4F4F4',
