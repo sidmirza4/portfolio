@@ -18,7 +18,8 @@ const MessageList = ({ messages }) => {
           .filter((p) => p.type === 'text')
           .map((p) => p.text)
           .join(' ');
-        const isStreamingMessage = message.role === 'assistant' && text === '';
+        const isStreamingMessage =
+          (message.role === 'assistant' && text === '') || message.isLoading;
 
         return (
           <MessageWrapper key={message.id} $isUser={message.role === 'user'}>
@@ -55,6 +56,7 @@ MessageList.propTypes = {
       role: PropTypes.string.isRequired,
       parts: PropTypes.array.isRequired,
       createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+      isLoading: PropTypes.bool,
     }),
   ).isRequired,
 };

@@ -30,13 +30,14 @@ import {
 const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   const [inputValue, setInputValue] = useState('');
   const [chatState, setChatState] = useState('empty');
+  const [tempLoadingMessage, setTempLoadingMessage] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatRef = useRef(null);
   const theme = useTheme();
 
   // AI Chat integration
-  const { messages, sendMessage, error, status } = useChat();
+  const { messages, sendMessage, error, status, regenerate } = useChat();
   const isStreaming = status === 'streaming';
 
   const scrollToBottom = () => {
@@ -63,8 +64,8 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   useEffect(() => {
     if (error) {
       setChatState('error');
+      setTempLoadingMessage(null);
     } else if (status === 'loading' && messages.length === 0) {
-      // Only show loading on initial load, not on every message
       setChatState('loading');
     } else if (messages.length === 0) {
       setChatState('empty');
@@ -73,8 +74,22 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
     }
   }, [error, status, messages.length]);
 
+  useEffect(() => {
+    if (tempLoadingMessage && messages.some((msg) => msg.role === 'assistant')) {
+      setTempLoadingMessage(null);
+    }
+  }, [messages, tempLoadingMessage]);
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isStreaming) return;
+
+    // Create temporary loading message immediately
+    setTempLoadingMessage({
+      id: 'temp-loading',
+      role: 'assistant',
+      parts: [{ type: 'text', text: '' }],
+      isLoading: true,
+    });
 
     sendMessage({ text: inputValue });
     setInputValue('');
@@ -86,8 +101,15 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   };
 
   const handleRetry = () => {
-    setChatState('empty');
-    // Reset error state if needed
+    if (messages.length === 0) {
+      setChatState('empty');
+    } else {
+      if (regenerate) {
+        regenerate();
+      }
+
+      setChatState('chat');
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -123,10 +145,19 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
         {/* Messages */}
         <MessagesContainer>
-          {chatState === 'chat' && <MessageList messages={messages} />}
+          {chatState === 'chat' && (
+            <MessageList
+              messages={tempLoadingMessage ? [...messages, tempLoadingMessage] : messages}
+            />
+          )}
 
           {(chatState === 'empty' || chatState === 'loading' || chatState === 'error') && (
-            <ChatStates state={chatState} onRetry={handleRetry} onChipClick={handleChipClick} />
+            <ChatStates
+              state={chatState}
+              onRetry={handleRetry}
+              onChipClick={handleChipClick}
+              error={error}
+            />
           )}
           <div ref={messagesEndRef} />
         </MessagesContainer>
@@ -145,7 +176,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             </InputContainer>
             <SendButton
               onClick={handleSendMessage}
-              disabled={!inputValue.trim() || isStreaming}
+              disabled={!inputValue.trim() || isStreaming || tempLoadingMessage !== null}
               aria-label="Send message"
             >
               <Send size={16} />
