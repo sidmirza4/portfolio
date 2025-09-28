@@ -1,205 +1,263 @@
 import styled, { keyframes } from 'styled-components';
 
-export const openAnim = keyframes`
-  from { opacity: 0; transform: translateY(8px) scale(0.995); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+// Keyframe animations
+export const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-export const closeAnim = keyframes`
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to   { opacity: 0; transform: translateY(8px) scale(0.995); }
+export const slideIn = keyframes`
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
 `;
 
-export const Side = styled.div`
-  width: 420px;
-  position: fixed;
-  bottom: 20px;
-  right: 40px;
-  z-index: 1000;
-  color: ${(p) => p.theme.bg.reverse};
-
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    width: 100dvw;
-    height: 100dvh;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
-    border-radius: 0;
-  }
-
-  &.chat-enter {
-    animation: ${openAnim} 180ms ease-out forwards;
-  }
-  &.chat-exit {
-    animation: ${closeAnim} 150ms ease-in forwards;
-  }
-`;
-
-export const ChatWindow = styled.div`
-  min-height: 500px;
-  background-color: ${(p) => p.theme.bg.gray};
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-  border-radius: 10px;
-  border: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
+// Main Container
+export const ChatWidgetContainer = styled.div`
+  position: fixed !important;
+  bottom: 9rem;
+  right: 2rem;
+  z-index: 50;
+  width: 42rem !important;
+  height: 60rem !important;
+  min-width: 42rem;
+  min-height: 60rem;
+  max-width: 42rem;
+  max-height: 60rem;
+  background-color: ${(p) => p.theme.bg.chatWidget};
+  box-shadow: 0 2rem 6rem rgba(6, 147, 227, 0.15), 0 0 0 1px rgba(6, 147, 227, 0.1);
+  border: 1px solid color-mix(in oklab, ${(p) => p.theme.brand.primary} 20%, transparent);
+  border-radius: 1.2rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transform-origin: bottom right;
 
   @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw;
     min-height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
     border-radius: 0;
-    border: none;
-    box-shadow: none;
+    transform-origin: center;
   }
 `;
 
+// Header Components
 export const ChatHeader = styled.div`
-  background: ${(p) => p.theme.bg.reverse};
-  color: ${(p) => p.theme.text?.reverse || '#111'};
-  padding: 12px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${(p) => p.theme.brand.border};
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  gap: 1.2rem;
+  padding: 1.6rem;
+  background-color: ${(p) => p.theme.bg.chatHeader};
+  border-bottom: 1px solid ${(p) => p.theme.brand.primary}20;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
 `;
 
-export const HeaderTitle = styled.span`
-  font-size: 14px;
+export const Avatar = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: ${(p) => p.theme.brand.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+`;
+
+export const HeaderInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+export const HeaderTitle = styled.h3`
+  color: ${(p) => p.theme.text.default};
+  font-size: ${(p) => p.theme.fontSize.lg};
   font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
+`;
+
+export const HeaderSubtitle = styled.p`
+  color: ${(p) => p.theme.text.secondary};
+  font-size: ${(p) => p.theme.fontSize.md};
+  margin: 0;
 `;
 
 export const HeaderActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
+`;
+
+export const ActionButton = styled.button`
+  background: none;
+  border: none;
+  color: ${(p) => p.theme.text.secondary};
+  cursor: pointer;
+  width: 3.2rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: ${(p) => p.theme.text.default};
+    background-color: ${(p) => p.theme.bg.default};
+  }
+
   svg {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    color: ${(p) => p.theme.text?.reverse || '#111'};
-    opacity: 0.95;
-    transition: opacity 0.16s ease, transform 0.12s ease;
-    &:hover {
-      opacity: 0.7;
-      transform: scale(0.96);
-    }
-  }
-
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    gap: 12px;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
+    width: 1.6rem;
+    height: 1.6rem;
   }
 `;
 
-export const HeaderMessage = styled.div`
-  font-size: 12px;
-  color: ${(props) => props.theme.text.secondary};
-`;
-
-export const ChatMessages = styled.div`
+// Messages Components
+export const MessagesContainer = styled.div`
   flex: 1;
-  padding: 12px;
+  padding: 1rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-height: 400px;
-  background: ${(p) => p.theme.chat?.bg || 'transparent'};
+  gap: 1rem;
+`;
 
-  /* Mobile responsive styles */
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    max-height: calc(100vh - 120px);
-    padding: 16px;
+export const MessageWrapper = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  animation: ${fadeIn} 0.3s ease-out;
+
+  ${(p) =>
+    p.$isUser &&
+    `
+    flex-direction: row-reverse;
+  `}
+`;
+
+export const MessageAvatar = styled.div`
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: ${(p) => (p.$isBot ? p.theme.brand.primary : p.theme.text.secondary)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${(p) => (p.$isBot ? 'white' : p.theme.text.default)};
+  flex-shrink: 0;
+
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
   }
 `;
 
 export const MessageBubble = styled.div`
-  max-width: 84%;
-  padding: 10px 12px;
-  border-radius: ${(p) => (p.$isUser ? '14px 14px 6px 14px' : '14px 14px 14px 6px')};
-  align-self: ${(p) => (p.$isUser ? 'flex-end' : 'flex-start')};
-  background: ${(p) => (p.$isUser ? p.theme.bg.defaultLight : p.theme.chat.bgLight)};
-  border: 1px solid ${(p) => (p.$isUser ? undefined : p.theme.chat.border)};
-  color: ${(p) => (p.$isUser ? p.theme.text.default : p.theme.text.reverse)};
-  font-size: 14px;
-  line-height: 1.35;
+  max-width: 70%;
+  border-radius: 1.2rem;
+  padding: 0.75rem;
   word-break: break-word;
+  background-color: ${(p) => (p.$isBot ? p.theme.bg.chatBotMessage : 'transparent')};
+  color: ${(p) => p.theme.text.default};
+  border: ${(p) =>
+    p.$isBot
+      ? `1px solid color-mix(in oklab, ${p.theme.text.secondary} 20%, transparent)`
+      : `1px solid ${p.theme.brand.primary}`};
+  animation: ${slideIn} 0.3s ease-out;
 `;
 
-export const ChatInputForm = styled.form`
+export const MessageText = styled.p`
+  font-size: ${(p) => p.theme.fontSize.body};
+  margin: 0;
+  line-height: 1.4;
+`;
+
+export const MessageTimestamp = styled.div`
+  font-size: ${(p) => p.theme.fontSize.small};
+  color: ${(p) => p.theme.text.secondary};
+  margin-top: 0.25rem;
+`;
+
+// Composer Components
+export const ComposerContainer = styled.div`
+  padding: 1.6rem;
+  border-top: 1px solid ${(p) => p.theme.brand.primary}20;
+  background-color: ${(p) => p.theme.bg.chatHeader};
+`;
+
+export const ComposerRow = styled.div`
   display: flex;
-  align-items: center;
-  padding: 8px 10px;
-  border-top: 1px solid ${(p) => p.theme.border || '#e5e7eb'};
-  background-color: white;
-  gap: 8px;
-  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.05);
-
-  /* Mobile responsive styles */
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    padding: 12px 16px;
-    gap: 12px;
-  }
+  align-items: stretch;
+  gap: 0.75rem;
 `;
 
-export const ChatInput = styled.input`
+export const InputContainer = styled.div`
   flex: 1;
-  padding: 8px 12px;
-  font-size: 14px;
+  position: relative;
+`;
+
+export const MessageInput = styled.input`
+  width: 100%;
+  height: 4rem;
+  padding: 0 1.2rem;
+  border: 1px solid ${(p) => p.theme.text.secondary}30;
+  border-radius: 1.2rem;
+  background-color: ${(p) => p.theme.bg.default};
+  color: ${(p) => p.theme.text.default};
+  font-size: ${(p) => p.theme.fontSize.body};
   outline: none;
-  &::placeholder: {
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: ${(p) => p.theme.brand.primary};
+    box-shadow: 0 0 0 3px ${(p) => p.theme.brand.primary}20;
+  }
+
+  &::placeholder {
     color: ${(p) => p.theme.text.secondary};
   }
-
-  /* Mobile responsive styles */
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    padding: 12px 16px;
-    font-size: 16px; /* Prevents zoom on iOS */
-  }
 `;
 
-export const IconButton = styled.button`
+export const SendButton = styled.button`
+  background-color: ${(p) => p.theme.brand.primary};
+  color: white;
+  border: none;
+  border-radius: 1.2rem;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
-  border: none;
   cursor: pointer;
-  padding: 6px;
-  border-radius: 50%;
-  transition: background 0.2s;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 
-  svg {
-    width: 20px;
-    height: 20px;
-    color: ${(p) => p.theme.text.reverse};
-  }
-
-  &:hover {
-    background: ${(p) => p.theme.bg?.gray || '#f3f4f6'};
+  &:hover:not(:disabled) {
+    background-color: ${(p) => p.theme.brand.primary};
   }
 
   &:disabled {
-    background: none;
-    cursor: not-allowed;
     opacity: 0.5;
+    cursor: not-allowed;
   }
 
-  /* Mobile responsive styles */
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    padding: 10px;
-    min-width: 44px; /* Minimum touch target size */
-    min-height: 44px;
-
-    svg {
-      width: 22px;
-      height: 22px;
-    }
+  svg {
+    width: 2rem;
+    height: 2rem;
   }
 `;

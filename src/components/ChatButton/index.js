@@ -87,8 +87,11 @@ const ChatButton = styled.button`
   `}
 
   @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    width: 5.6rem;
-    height: 5.6rem;
+    ${(p) =>
+      p.$isOpen &&
+      `
+      display: none;
+    `}
   }
 `;
 
@@ -349,9 +352,9 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
       </ChatButton>
 
       {/* Tooltip */}
-      <Tooltip $isHovered={isHovered} $isPressed={isPressed}>
-        {isOpen ? 'Close chat' : `Need help? Chat with ${BOT_NAME}`}
-      </Tooltip>
+      {/* <Tooltip $isHovered={isHovered} $isPressed={isPressed}>
+        {isOpen ? '' : `Need help? Chat with ${BOT_NAME}`}
+      </Tooltip> */}
 
       {/* Welcome Message (commented out for now) */}
       <WelcomeMessage>
