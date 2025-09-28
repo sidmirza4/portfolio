@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Minimize2, Send, Paperclip, MoreHorizontal, User, Bot } from 'lucide-react';
 import { bool, func } from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, useTheme } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { useChat } from '@ai-sdk/react';
+import anime from 'animejs';
 import TypingIndicator from '../TypingIndicator';
+import ChatStates from '../ChatStates';
 import PropTypes from 'prop-types';
 
 // Keyframe animations
@@ -15,6 +18,16 @@ const fadeIn = keyframes`
 const slideIn = keyframes`
   from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
+`;
+
+const openAnim = keyframes`
+  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+`;
+
+const closeAnim = keyframes`
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(8px) scale(0.995); }
 `;
 
 // Styled Components
@@ -177,24 +190,6 @@ const MessageText = styled.p`
   font-size: ${(p) => p.theme.fontSize.body};
   margin: 0;
   line-height: 1.4;
-`;
-
-const MessageActions = styled.div`
-  margin-top: 0.25rem;
-`;
-
-const ShowMoreButton = styled.button`
-  color: ${(p) => p.theme.brand.primary};
-  font-size: ${(p) => p.theme.fontSize.small};
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
-
-  &:hover {
-    text-decoration: none;
-  }
 `;
 
 const MessageTimestamp = styled.div`
@@ -388,20 +383,16 @@ const chipData = [
 
 // Main Component
 const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
-  const [messages, setMessages] = useState([
-    {
-      id: '1',
-      content:
-        "Hi there! I'm ShAI, Shahid's personal AI assistant. I can help you learn about his projects, skills, experience, and more. What would you like to know?",
-      isBot: true,
-      timestamp: new Date(),
-    },
-  ]);
   const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [showMore, setShowMore] = useState(null);
+  const [chatState, setChatState] = useState('empty');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const chatRef = useRef(null);
+  const theme = useTheme();
+
+  // AI Chat integration
+  const { messages, sendMessage, error, status } = useChat();
+  const isStreaming = status === 'streaming';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -409,39 +400,49 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages.length, error]);
+
+  useEffect(() => {
+    if (isOpen && chatRef.current) {
+      anime({
+        targets: chatRef.current,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        scale: [0.95, 1],
+        duration: 250,
+        easing: 'easeOutQuad',
+      });
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (error) {
+      setChatState('error');
+    } else if (status === 'loading' && messages.length === 0) {
+      // Only show loading on initial load, not on every message
+      setChatState('loading');
+    } else if (messages.length === 0) {
+      setChatState('empty');
+    } else {
+      setChatState('chat');
+    }
+  }, [error, status, messages.length]);
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isStreaming) return;
 
-    const userMessage = {
-      id: Date.now().toString(),
-      content: inputValue,
-      isBot: false,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    sendMessage({ text: inputValue });
     setInputValue('');
-    setIsTyping(true);
-
-    // Simulate bot response
-    setTimeout(() => {
-      const botMessage = {
-        id: (Date.now() + 1).toString(),
-        content:
-          "Thanks for your message! I'm here to help you learn more about Shahid's work and experience.",
-        isBot: true,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1500);
   };
 
   const handleChipClick = (action) => {
     setInputValue(action);
     inputRef.current?.focus();
+  };
+
+  const handleRetry = () => {
+    setChatState('empty');
+    // Reset error state if needed
   };
 
   const handleKeyPress = (e) => {
@@ -451,16 +452,11 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
     }
   };
 
-  const truncateMessage = (content, maxLength = 280) => {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
-  };
-
   if (!isOpen) return null;
 
   return (
     <CSSTransition in={isOpen} timeout={200} classNames="chat" unmountOnExit>
-      <ChatWidgetContainer className={className}>
+      <ChatWidgetContainer ref={chatRef} className={className}>
         {/* Header */}
         <ChatHeader>
           <Avatar>
@@ -482,49 +478,62 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
         {/* Messages */}
         <MessagesContainer>
-          {messages.map((message) => (
-            <MessageWrapper key={message.id} $isUser={!message.isBot}>
-              <MessageAvatar $isBot={message.isBot}>
-                {message.isBot ? <Bot size={16} /> : <User size={16} />}
-              </MessageAvatar>
-              <MessageBubble $isBot={message.isBot}>
-                <MessageText>
-                  {showMore === message.id ? message.content : truncateMessage(message.content)}
-                </MessageText>
-                {message.content.length > 280 && (
-                  <MessageActions>
-                    <ShowMoreButton
-                      onClick={() => setShowMore(showMore === message.id ? null : message.id)}
-                    >
-                      {showMore === message.id ? 'Show less' : 'Show more'}
-                    </ShowMoreButton>
-                  </MessageActions>
-                )}
-                <MessageTimestamp>
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </MessageTimestamp>
-              </MessageBubble>
-            </MessageWrapper>
-          ))}
-          {isTyping && <TypingIndicator />}
+          {chatState === 'chat' &&
+            messages.map((message) => {
+              const text = message.parts
+                .filter((p) => p.type === 'text')
+                .map((p) => p.text)
+                .join(' ');
+              const isStreamingMessage = message.role === 'assistant' && text === '';
+
+              return (
+                <MessageWrapper key={message.id} $isUser={message.role === 'user'}>
+                  <MessageAvatar $isBot={message.role === 'assistant'}>
+                    {message.role === 'assistant' ? <Bot size={16} /> : <User size={16} />}
+                  </MessageAvatar>
+                  <MessageBubble $isBot={message.role === 'assistant'}>
+                    <MessageText>{isStreamingMessage ? <TypingIndicator /> : text}</MessageText>
+                    {!isStreamingMessage && (
+                      <MessageTimestamp>
+                        {message.createdAt
+                          ? new Date(message.createdAt).toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })
+                          : new Date().toLocaleTimeString([], {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                      </MessageTimestamp>
+                    )}
+                  </MessageBubble>
+                </MessageWrapper>
+              );
+            })}
+
+          {(chatState === 'empty' || chatState === 'loading' || chatState === 'error') && (
+            <ChatStates state={chatState} onRetry={handleRetry} onChipClick={handleChipClick} />
+          )}
           <div ref={messagesEndRef} />
         </MessagesContainer>
 
-        {/* Action Chips */}
-        <ActionChipsContainer>
-          <ActionChipsWrapper>
-            {chipData.map((chip) => (
-              <ActionChip
-                key={chip.id}
-                onClick={() => handleChipClick(chip.action)}
-                $variant={chip.variant}
-                aria-label={`Suggested message: ${chip.label}`}
-              >
-                {chip.label}
-              </ActionChip>
-            ))}
-          </ActionChipsWrapper>
-        </ActionChipsContainer>
+        {/* Action Chips - Only show when in chat mode and no user messages yet */}
+        {chatState === 'chat' && !messages.some((msg) => msg.role === 'user') && (
+          <ActionChipsContainer>
+            <ActionChipsWrapper>
+              {chipData.map((chip) => (
+                <ActionChip
+                  key={chip.id}
+                  onClick={() => handleChipClick(chip.action)}
+                  $variant={chip.variant}
+                  aria-label={`Suggested message: ${chip.label}`}
+                >
+                  {chip.label}
+                </ActionChip>
+              ))}
+            </ActionChipsWrapper>
+          </ActionChipsContainer>
+        )}
 
         {/* Composer */}
         <ComposerContainer>
@@ -540,7 +549,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             </InputContainer>
             <SendButton
               onClick={handleSendMessage}
-              disabled={!inputValue.trim()}
+              disabled={!inputValue.trim() || isStreaming}
               aria-label="Send message"
             >
               <Send size={16} />
