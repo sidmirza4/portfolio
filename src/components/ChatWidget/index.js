@@ -8,6 +8,7 @@ import anime from 'animejs';
 import TypingIndicator from '../TypingIndicator';
 import ChatStates from '../ChatStates';
 import PropTypes from 'prop-types';
+import { BOT_NAME } from '../../lib/constants';
 
 // Keyframe animations
 const fadeIn = keyframes`
@@ -463,7 +464,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             <Bot size={20} />
           </Avatar>
           <HeaderInfo>
-            <HeaderTitle>Hello, I'm ShAI</HeaderTitle>
+            <HeaderTitle>Hello, I'm {BOT_NAME}</HeaderTitle>
             <HeaderSubtitle>Shahid's personal AI assistant</HeaderSubtitle>
           </HeaderInfo>
           <HeaderActions>

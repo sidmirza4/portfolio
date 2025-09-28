@@ -6,6 +6,8 @@ export const LOADER_DELAY = 2000;
 export const PROJECTS_GRID_LIMIT = 6;
 export const GA_TRACKING_ID = 'G-MPQCC79GXK';
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+export const BOT_NAME = 'Sera';
+
 export const KEY_CODES = {
   ARROW_LEFT: 'ArrowLeft',
   ARROW_LEFT_IE11: 'Left',

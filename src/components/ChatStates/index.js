@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AlertCircle, RefreshCw, Bot } from 'lucide-react';
+import { BOT_NAME } from '../../lib/constants';
 
 // Chip data (same as in ChatWidget)
 const chipData = [
@@ -194,7 +195,7 @@ const ChatStates = ({ state, onRetry, onChipClick, className }) => {
         <Avatar>
           <Bot size={32} />
         </Avatar>
-        <Title>Welcome to ShAI</Title>
+        <Title>Welcome to {BOT_NAME}</Title>
         <Description>
           I'm Shahid's AI assistant. I can help you learn about his projects, skills, and
           experience. Get started with one of these suggestions:

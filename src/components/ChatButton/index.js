@@ -1,33 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { MessageCircle, X } from 'lucide-react';
-import { bool, func } from 'prop-types';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import PropTypes from 'prop-types';
+import { MessageCircle, X } from 'lucide-react';
+import { BOT_NAME } from '../../lib/constants';
 
 // Keyframe animations
-const ripple = keyframes`
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
+const rippleEffect = keyframes`
+  to {
+    transform: scale(2);
     opacity: 0;
   }
 `;
 
-const ping = keyframes`
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
+const pingAnimation = keyframes`
   75%, 100% {
-    transform: scale(1.5);
+    transform: scale(2);
     opacity: 0;
   }
 `;
 
-const pulse = keyframes`
+const pulseAnimation = keyframes`
   0%, 100% {
     opacity: 1;
   }
@@ -39,20 +30,24 @@ const pulse = keyframes`
 // Styled Components
 const ChatButtonContainer = styled.div`
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 50;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
 
-  @media (min-width: ${(p) => p.theme.breakpoints.md}) {
-    bottom: 2rem;
-    right: 2rem;
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    bottom: 1.5rem;
+    right: 1.5rem;
   }
 `;
 
 const ChatButton = styled.button`
   position: relative;
-  width: 6.4rem;
-  height: 6.4rem;
+  width: 6.4rem; /* 64px */
+  height: 6.4rem; /* 64px */
   border-radius: 50%;
   background-color: ${(p) => p.theme.brand.primary};
   color: white;
@@ -60,7 +55,6 @@ const ChatButton = styled.button`
   cursor: pointer;
   box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease-out;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,18 +71,25 @@ const ChatButton = styled.button`
   }
 
   &:focus {
-    box-shadow: 0 0 0 4px ${(p) => p.theme.brand.primary}30, 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.2), 0 0 0 2px ${(p) => p.theme.bg.default},
+      0 0 0 6px color-mix(in oklab, ${(p) => p.theme.brand.primary} 30%, transparent);
   }
 
+  /* Open state styling */
   ${(p) =>
     p.$isOpen &&
     `
-    background-color: ${p.theme.text.secondary};
+    background-color: #75708a;
     
     &:hover {
-      background-color: #75708a;
+      background-color:rgb(101, 96, 119);
     }
   `}
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
 `;
 
 const BackgroundGradient = styled.div`
@@ -106,10 +107,17 @@ const BackgroundGradient = styled.div`
 
 const RippleEffect = styled.div`
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  width: 3.2rem; /* Start from center, half the button size */
+  height: 3.2rem;
+  margin-top: -1.6rem; /* Center it */
+  margin-left: -1.6rem; /* Center it */
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.3);
-  animation: ${ripple} 0.4s ease-out;
+  transform: scale(0);
+  animation: ${rippleEffect} 0.5s ease-out;
+  pointer-events: none;
 `;
 
 const IconContainer = styled.div`
@@ -130,67 +138,90 @@ const IconContainer = styled.div`
 `;
 
 const Icon = styled.div`
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.4rem; /* 24px */
+  height: 2.4rem; /* 24px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-out;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
+/* Green notification dot on top-right corner */
 const NotificationIndicator = styled.div`
   position: absolute;
-  top: -0.25rem;
-  right: -0.25rem;
-  width: 1rem;
-  height: 1rem;
+  top: -0.2rem;
+  right: -0.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
   background-color: ${(p) => p.theme.brand.accent};
-  border: 2px solid ${(p) => p.theme.bg.default};
   border-radius: 50%;
-  animation: ${pulse} 2s infinite;
+  opacity: 1;
+  display: ${(p) => (p.$hasNotification ? 'block' : 'none')};
+  animation: ${pulseAnimation} 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 1rem;
+    height: 1rem;
+    top: 0;
+    right: 0;
+  }
 `;
 
-const NotificationPulse = styled.div`
+/* Pulsing ring around the entire button using your ping animation */
+const NotificationRing = styled.div`
   position: absolute;
   inset: 0;
   border-radius: 50%;
   border: 2px solid ${(p) => p.theme.brand.accent};
-  animation: ${ping} 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: ${pingAnimation} 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  opacity: 0.75;
+  display: ${(p) => (p.$hasNotification ? 'block' : 'none')};
 `;
 
 const Tooltip = styled.div`
   position: absolute;
   bottom: 100%;
   right: 0;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  background-color: ${(p) => p.theme.bg.defaultLight};
+  margin-bottom: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  background-color: ${(p) => p.theme.bg.default};
   color: ${(p) => p.theme.text.default};
-  font-size: ${(p) => p.theme.fontSize.small};
-  border-radius: 0.5rem;
-  box-shadow: 0 1rem 3rem -1rem rgba(2, 12, 27, 0.7);
-  border: 1px solid ${(p) => p.theme.brand.border};
+  border-radius: 0.8rem;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
   white-space: nowrap;
-  opacity: 0;
+  font-size: ${(p) => p.theme.fontSize.small};
+  font-weight: 500;
+  opacity: ${(p) => (p.$isHovered && !p.$isPressed ? 1 : 0)};
+  transform: ${(p) =>
+    p.$isHovered && !p.$isPressed ? 'translateY(0) scale(1)' : 'translateY(4px) scale(0.95)'};
+  transition: all 0.2s ease-out;
   pointer-events: none;
-  transition: all 0.2s ease;
-  transform: translateY(0.5rem);
-
-  ${(p) =>
-    p.$isHovered &&
-    !p.$isPressed &&
-    `
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  `}
+  z-index: 10;
 
   &::after {
     content: '';
     position: absolute;
     top: 100%;
-    right: 1rem;
+    right: 1.2rem;
     width: 0;
     height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid ${(p) => p.theme.bg.defaultLight};
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid ${(p) => p.theme.bg.default};
+  }
+
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    display: none;
   }
 `;
 
@@ -198,47 +229,36 @@ const WelcomeMessage = styled.div`
   position: absolute;
   bottom: 100%;
   right: 0;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: ${(p) => p.theme.bg.defaultLight};
-  color: ${(p) => p.theme.text.default};
-  border-radius: 0.5rem;
-  box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
-  border: 1px solid ${(p) => p.theme.brand.border};
-  max-width: 17.5rem;
+  margin-bottom: 1rem;
+  width: 28rem;
+  background-color: ${(p) => p.theme.bg.default};
+  border-radius: 1.2rem;
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.15);
   opacity: 0;
+  transform: translateY(8px) scale(0.95);
+  transition: all 0.3s ease-out;
   pointer-events: none;
-  transition: all 0.3s ease;
-  transform: translateY(1rem);
+  z-index: 10;
+  display: none; /* Commented out for now */
 
-  @media (max-width: ${(p) => p.theme.breakpoints.md}) {
-    display: none;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    right: 2rem;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid ${(p) => p.theme.bg.defaultLight};
+  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: calc(100vw - 3rem);
+    right: -1rem;
   }
 `;
 
 const WelcomeContent = styled.div`
   display: flex;
+  gap: 1.2rem;
+  padding: 1.6rem;
   align-items: flex-start;
-  gap: 0.75rem;
 `;
 
 const WelcomeAvatar = styled.div`
-  width: 2rem;
-  height: 2rem;
-  background-color: ${(p) => p.theme.brand.primary};
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
+  background-color: ${(p) => p.theme.brand.primary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,91 +266,91 @@ const WelcomeAvatar = styled.div`
 `;
 
 const WelcomeText = styled.div`
+  flex: 1;
+
   p {
     margin: 0;
+    color: ${(p) => p.theme.text.default};
+    font-size: ${(p) => p.theme.fontSize.micro};
+    line-height: 1.4;
 
     &:first-child {
-      font-size: ${(p) => p.theme.fontSize.small};
-      margin-bottom: 0.25rem;
-    }
-
-    &:last-child {
-      font-size: ${(p) => p.theme.fontSize.micro};
-      color: ${(p) => p.theme.text.secondary};
+      font-weight: 600;
+      margin-bottom: 0.4rem;
     }
   }
 `;
 
 // Main Component
-const FloatingChatButton = ({ isOpen, onClick, hasNotification = false, className }) => {
+const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const [showRipple, setShowRipple] = useState(false);
+  const buttonRef = useRef(null);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    setIsPressed(true);
     setShowRipple(true);
-    onClick();
+
+    // Reset pressed state
+    setTimeout(() => setIsPressed(false), 150);
+
+    // Reset ripple effect
+    setTimeout(() => setShowRipple(false), 400);
+
+    onClick?.();
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      setIsPressed(true);
-      handleClick();
-    }
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
-  const handleKeyUp = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      setIsPressed(false);
-    }
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setIsPressed(false);
   };
 
-  useEffect(() => {
-    if (showRipple) {
-      const timer = setTimeout(() => setShowRipple(false), 400);
-      return () => clearTimeout(timer);
-    }
-  }, [showRipple]);
+  const handleMouseDown = () => {
+    setIsPressed(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsPressed(false);
+  };
 
   return (
-    <ChatButtonContainer className={className}>
-      {/* Chat Button */}
+    <ChatButtonContainer>
       <ChatButton
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
+        ref={buttonRef}
         $isOpen={isOpen}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
-        aria-expanded={isOpen}
+        role="button"
+        tabIndex={0}
       >
-        {/* Background Gradient */}
         <BackgroundGradient />
 
-        {/* Ripple Effect */}
         {showRipple && <RippleEffect />}
 
-        {/* Icon Container */}
         <IconContainer $isOpen={isOpen}>
           <Icon>{isOpen ? <X size="100%" /> : <MessageCircle size="100%" />}</Icon>
         </IconContainer>
 
-        {/* Notification Indicator */}
-        {hasNotification && !isOpen && (
-          <>
-            <NotificationIndicator />
-            <NotificationPulse />
-          </>
-        )}
+        {/* Green notification dot on top-right */}
+        <NotificationIndicator $hasNotification={hasNotification && !isOpen} />
+
+        {/* Pulsing ring around entire button using your ping animation */}
+        {/* <NotificationRing $hasNotification={true} /> */}
       </ChatButton>
 
       {/* Tooltip */}
       <Tooltip $isHovered={isHovered} $isPressed={isPressed}>
-        {isOpen ? 'Close chat' : 'Need help? Chat with ShAI'}
+        {isOpen ? 'Close chat' : `Need help? Chat with ${BOT_NAME}`}
       </Tooltip>
 
       {/* Welcome Message (commented out for now) */}
@@ -340,20 +360,13 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false, classNam
             <MessageCircle size={16} color="white" />
           </WelcomeAvatar>
           <WelcomeText>
-            <p>Hi! I'm ShAI 👋</p>
+            <p>Hi! I'm {BOT_NAME} 👋</p>
             <p>I can help you learn about Shahid's projects and experience.</p>
           </WelcomeText>
         </WelcomeContent>
       </WelcomeMessage>
     </ChatButtonContainer>
   );
-};
-
-FloatingChatButton.propTypes = {
-  isOpen: bool,
-  onClick: func,
-  hasNotification: bool,
-  className: PropTypes.string,
 };
 
 export default FloatingChatButton;
