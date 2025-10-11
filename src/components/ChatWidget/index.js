@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Minimize2, Send, Bot } from 'lucide-react';
-import { bool, func } from 'prop-types';
-import { useTheme } from 'styled-components';
+import PropTypes, { bool, func } from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import { useChat } from '@ai-sdk/react';
 import anime from 'animejs';
-import PropTypes from 'prop-types';
 import { BOT_NAME } from '../../lib/constants';
 import ChatStates from '../ChatStates';
 import MessageList from './MessageList';
@@ -34,7 +32,6 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatRef = useRef(null);
-  const theme = useTheme();
 
   // AI Chat integration
   const { messages, sendMessage, error, status, regenerate } = useChat();
@@ -130,8 +127,11 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             <Bot size={20} />
           </Avatar>
           <HeaderInfo>
-            <HeaderTitle>Hello, I'm {BOT_NAME}</HeaderTitle>
-            <HeaderSubtitle>Shahid's personal AI assistant</HeaderSubtitle>
+            <HeaderTitle>
+              Hello, I&apos;m
+              {BOT_NAME}
+            </HeaderTitle>
+            <HeaderSubtitle>Shahid&apos;s personal AI assistant</HeaderSubtitle>
           </HeaderInfo>
           <HeaderActions>
             <ActionButton onClick={onMinimize} aria-label="Minimize chat">

@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { AlertCircle, RefreshCw, Bot } from 'lucide-react';
-import { BOT_NAME } from '../../lib/constants';
+import { BOT_NAME, CHIP_DATA } from '../../lib/constants';
 import {
   ChatStatesContainer,
   Avatar,
@@ -13,7 +14,6 @@ import {
   ActionChipsWrapper,
   ActionChip,
 } from './styles';
-import { CHIP_DATA } from '../../lib/constants';
 
 const ChatStates = ({ state, onRetry, onChipClick, className }) => {
   if (state === 'empty') {
@@ -22,9 +22,12 @@ const ChatStates = ({ state, onRetry, onChipClick, className }) => {
         <Avatar>
           <Bot size={32} />
         </Avatar>
-        <Title>Welcome to {BOT_NAME}</Title>
+        <Title>
+          Welcome to
+          {BOT_NAME}
+        </Title>
         <Description>
-          I'm Shahid's AI assistant. I can help you learn about his projects, skills, and
+          I&apos;m Shahid&apos;s AI assistant. I can help you learn about his projects, skills, and
           experience. Get started with one of these suggestions:
         </Description>
         {onChipClick && (
@@ -67,8 +70,8 @@ const ChatStates = ({ state, onRetry, onChipClick, className }) => {
         </ErrorIcon>
         <Title>Connection Error</Title>
         <Description>
-          I'm having trouble connecting right now. Please check your internet connection and try
-          again.
+          I&apos;m having trouble connecting right now. Please check your internet connection and
+          try again.
         </Description>
         {onRetry && (
           <RetryButton onClick={onRetry}>
@@ -81,6 +84,13 @@ const ChatStates = ({ state, onRetry, onChipClick, className }) => {
   }
 
   return null;
+};
+
+ChatStates.propTypes = {
+  state: PropTypes.oneOf(['empty', 'loading', 'error']).isRequired,
+  onRetry: PropTypes.func,
+  onChipClick: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default ChatStates;

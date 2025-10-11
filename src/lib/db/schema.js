@@ -1,5 +1,4 @@
-import { pgTable, uuid, text, jsonb, timestamp } from 'drizzle-orm/pg-core';
-import { customType } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, jsonb, timestamp, customType } from 'drizzle-orm/pg-core';
 
 const vector = (dims) => customType({ dataType: () => `vector(${dims})` });
 

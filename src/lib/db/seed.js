@@ -1,10 +1,10 @@
 import { embed } from 'ai';
 import { gateway } from '@ai-sdk/gateway';
-import db from './index.js';
-import { documents, chunks } from './schema.js';
 import fs from 'fs';
 import path from 'path';
 import { sql } from 'drizzle-orm';
+import { documents, chunks } from './schema.js';
+import db from './index.js';
 
 const biographyPath = path.join(process.cwd(), 'src', 'assets', 'biography.txt');
 const biography = fs.readFileSync(biographyPath, 'utf8').trim();
@@ -16,32 +16,34 @@ function chunkText(text, maxLength = 1000) {
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
-  const chunksArr = [];
-  let current = '';
 
-  for (const line of lines) {
-    // If this line would make the chunk too long, start a new chunk
-    const testChunk = current ? current + ' ' + line : line;
+  const result = lines.reduce(
+    (acc, line) => {
+      const testChunk = acc.current ? `${acc.current} ${line}` : line;
 
-    if (testChunk.length > maxLength) {
-      if (current) {
-        chunksArr.push(current.trim());
-        current = line;
+      if (testChunk.length > maxLength) {
+        if (acc.current) {
+          acc.chunksArr.push(acc.current.trim());
+          acc.current = line;
+        } else {
+          // If even a single line is too long, split it
+          acc.chunksArr.push(line.substring(0, maxLength));
+          acc.current = line.substring(maxLength);
+        }
       } else {
-        // If even a single line is too long, split it
-        chunksArr.push(line.substring(0, maxLength));
-        current = line.substring(maxLength);
+        acc.current = testChunk;
       }
-    } else {
-      current = testChunk;
-    }
+
+      return acc;
+    },
+    { chunksArr: [], current: '' },
+  );
+
+  if (result.current) {
+    result.chunksArr.push(result.current.trim());
   }
 
-  if (current) {
-    chunksArr.push(current.trim());
-  }
-
-  return chunksArr;
+  return result.chunksArr;
 }
 
 // --- Generate embedding using Vercel AI SDK ---
@@ -78,8 +80,9 @@ async function loadPortfolio() {
 
   console.log('🧠 Generating embeddings and inserting into DB...');
 
-  for (let i = 0; i < portfolioChunks.length; i++) {
-    const content = portfolioChunks[i];
+  await portfolioChunks.reduce(async (previousPromise, content, i) => {
+    await previousPromise;
+
     const embedding = await getEmbedding(content);
 
     await db.insert(chunks).values({
@@ -90,7 +93,9 @@ async function loadPortfolio() {
     });
 
     console.log(`✅ Inserted chunk ${i + 1}/${portfolioChunks.length}`);
-  }
+
+    return Promise.resolve();
+  }, Promise.resolve());
 
   console.log('🎉 Portfolio successfully inserted!');
 }

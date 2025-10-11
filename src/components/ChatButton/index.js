@@ -1,18 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { MessageCircle, X } from 'lucide-react';
+import PropTypes from 'prop-types';
 import { BOT_NAME } from '../../lib/constants';
 
 // Keyframe animations
 const rippleEffect = keyframes`
   to {
-    transform: scale(2);
-    opacity: 0;
-  }
-`;
-
-const pingAnimation = keyframes`
-  75%, 100% {
     transform: scale(2);
     opacity: 0;
   }
@@ -172,54 +166,6 @@ const NotificationIndicator = styled.div`
   }
 `;
 
-/* Pulsing ring around the entire button using your ping animation */
-const NotificationRing = styled.div`
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid ${(p) => p.theme.brand.accent};
-  animation: ${pingAnimation} 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-  opacity: 0.75;
-  display: ${(p) => (p.$hasNotification ? 'block' : 'none')};
-`;
-
-const Tooltip = styled.div`
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  margin-bottom: 0.8rem;
-  padding: 0.8rem 1.2rem;
-  background-color: ${(p) => p.theme.bg.default};
-  color: ${(p) => p.theme.text.default};
-  border-radius: 0.8rem;
-  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
-  white-space: nowrap;
-  font-size: ${(p) => p.theme.fontSize.small};
-  font-weight: 500;
-  opacity: ${(p) => (p.$isHovered && !p.$isPressed ? 1 : 0)};
-  transform: ${(p) =>
-    p.$isHovered && !p.$isPressed ? 'translateY(0) scale(1)' : 'translateY(4px) scale(0.95)'};
-  transition: all 0.2s ease-out;
-  pointer-events: none;
-  z-index: 10;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    right: 1.2rem;
-    width: 0;
-    height: 0;
-    border-left: 0.5rem solid transparent;
-    border-right: 0.5rem solid transparent;
-    border-top: 0.5rem solid ${(p) => p.theme.bg.default};
-  }
-
-  @media (max-width: ${(p) => p.theme.breakpoints.sm}) {
-    display: none;
-  }
-`;
-
 const WelcomeMessage = styled.div`
   position: absolute;
   bottom: 100%;
@@ -278,40 +224,17 @@ const WelcomeText = styled.div`
 
 // Main Component
 const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
   const [showRipple, setShowRipple] = useState(false);
   const buttonRef = useRef(null);
 
   const handleClick = (e) => {
     e.preventDefault();
-    setIsPressed(true);
     setShowRipple(true);
-
-    // Reset pressed state
-    setTimeout(() => setIsPressed(false), 150);
 
     // Reset ripple effect
     setTimeout(() => setShowRipple(false), 400);
 
     onClick?.();
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setIsPressed(false);
-  };
-
-  const handleMouseDown = () => {
-    setIsPressed(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsPressed(false);
   };
 
   return (
@@ -320,10 +243,6 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
         ref={buttonRef}
         $isOpen={isOpen}
         onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
         role="button"
         tabIndex={0}
@@ -338,15 +257,7 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
 
         {/* Green notification dot on top-right */}
         <NotificationIndicator $hasNotification={hasNotification && !isOpen} />
-
-        {/* Pulsing ring around entire button using your ping animation */}
-        {/* <NotificationRing $hasNotification={true} /> */}
       </ChatButton>
-
-      {/* Tooltip */}
-      {/* <Tooltip $isHovered={isHovered} $isPressed={isPressed}>
-        {isOpen ? '' : `Need help? Chat with ${BOT_NAME}`}
-      </Tooltip> */}
 
       {/* Welcome Message (commented out for now) */}
       <WelcomeMessage>
@@ -355,13 +266,23 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
             <MessageCircle size={16} color="white" />
           </WelcomeAvatar>
           <WelcomeText>
-            <p>Hi! I'm {BOT_NAME} 👋</p>
-            <p>I can help you learn about Shahid's projects and experience.</p>
+            <p>
+Hi! I&apos;m{BOT_NAME}
+{' '}
+👋
+</p>
+            <p>I can help you learn about Shahid&apos;s projects and experience.</p>
           </WelcomeText>
         </WelcomeContent>
       </WelcomeMessage>
     </ChatButtonContainer>
   );
+};
+
+FloatingChatButton.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  hasNotification: PropTypes.bool,
 };
 
 export default FloatingChatButton;

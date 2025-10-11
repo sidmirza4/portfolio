@@ -1,10 +1,9 @@
 import { gateway } from '@ai-sdk/gateway';
-import { streamText, convertToModelMessages } from 'ai';
-import { embed } from 'ai';
+import { streamText, convertToModelMessages, embed } from 'ai';
 
+import { sql } from 'drizzle-orm';
 import db from '../../../lib/db/index';
 import { chunks } from '../../../lib/db/schema';
-import { sql } from 'drizzle-orm';
 
 // const getTopChunks = async (queryEmbedding, topN = 5) => {
 //   const result = await db
