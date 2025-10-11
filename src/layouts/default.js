@@ -52,7 +52,7 @@ const DefaultLayout = ({ children }) => {
             <Navbar isHome={isHome} />
             <Social isHome={isHome} />
             {/* <Email isHome={isHome} /> */}
-            <Side isHome={isHome} orientation="right">
+            <Side isHome={isHome} orientation="right" hideOnSmallScreen={false}>
               <FloatingChatButton isOpen={isChatWidgetOpen} onClick={handleChatButtonClick} />
             </Side>
             <ChatWidget
