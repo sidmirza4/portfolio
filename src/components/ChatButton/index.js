@@ -266,11 +266,7 @@ const FloatingChatButton = ({ isOpen, onClick, hasNotification = false }) => {
             <MessageCircle size={16} color="white" />
           </WelcomeAvatar>
           <WelcomeText>
-            <p>
-Hi! I&apos;m{BOT_NAME}
-{' '}
-👋
-</p>
+            <p>Hi! I&apos;m {BOT_NAME} 👋</p>
             <p>I can help you learn about Shahid&apos;s projects and experience.</p>
           </WelcomeText>
         </WelcomeContent>
