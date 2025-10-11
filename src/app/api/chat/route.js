@@ -1,49 +1,78 @@
 import { gateway } from '@ai-sdk/gateway';
 import { streamText, convertToModelMessages } from 'ai';
-// import fs from 'fs';
-// import path from 'path';
+import { embed } from 'ai';
 
-// const biographyPath = path.join(process.cwd(), 'src', 'assets', 'biography.txt');
-// const biography = fs.readFileSync(biographyPath, 'utf8').trim();
-
-
-import db from '../../../lib/db/index'; // your Drizzle client
+import db from '../../../lib/db/index';
 import { chunks } from '../../../lib/db/schema';
 import { sql } from 'drizzle-orm';
 
-const getTopChunks = async (queryEmbedding, topN = 5) => {
-  
-  const result = await db
-    .select()
-    .from(chunks)
-    .orderBy(
-      sql`1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector)`
-    )
-    .limit(topN);
+// const getTopChunks = async (queryEmbedding, topN = 5) => {
+//   const result = await db
+//     .select()
+//     .from(chunks)
+//     .orderBy(sql`1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector)`)
+//     .limit(topN);
 
-  return result;
-};
+//   return result;
+// };
 
-async function getQueryEmbedding(text) {
-  const res = await fetch('http://localhost:8000/embed', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text })
-  });
-  const { embedding } = await res.json();
-  return embedding;
+async function getSimilarChunks(queryEmbedding, topN = 3) {
+  try {
+    // Convert the embedding array to string format to match what we stored
+    const embeddingString = `[${queryEmbedding.join(',')}]`;
+
+    const result = await db.execute(sql`
+      SELECT content, embedding <-> ${embeddingString}::vector AS distance
+      FROM ${chunks}
+      ORDER BY embedding <-> ${embeddingString}::vector
+      LIMIT ${topN};
+    `);
+    return result.rows.map((r) => r.content);
+  } catch (err) {
+    console.error('❌ Database similarity search failed:', err);
+    throw new Error('Database similarity search failed');
+  }
 }
 
-
+async function getQueryEmbedding(text) {
+  const { embedding } = await embed({
+    model: gateway.textEmbeddingModel('openai/text-embedding-3-small'),
+    value: text,
+  });
+  return embedding;
+}
 
 export async function POST(req) {
   const { messages } = await req.json();
 
-  const queryEmbedding = await getQueryEmbedding(messages[messages.length - 1].parts[0].text);
+  if (!messages || !messages.length) {
+    return new Response(JSON.stringify({ error: 'No messages provided.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
-  const topChunks = await getTopChunks(queryEmbedding, 3);
-  
-  const contextText = topChunks.map(c => c.content).join("\n\n");
+  // Extract query text from the last message
+  const lastMessage = messages[messages.length - 1];
+  const queryText = lastMessage.parts?.[0]?.text || lastMessage.content || lastMessage.text || '';
+
+  console.log('🔍 Query text:', queryText);
+
+  const queryEmbedding = await getQueryEmbedding(queryText);
+  const topChunks = await getSimilarChunks(queryEmbedding, 3);
+
+  console.log('📊 Retrieved chunks:', topChunks.length);
+
+  // Handle empty results
+  if (topChunks.length === 0) {
+    return new Response(JSON.stringify({ error: 'No relevant information found.' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const contextText = topChunks.join('\n\n');
+  console.log('📝 Context length:', contextText.length);
 
   const systemMessage = {
     role: 'system',
@@ -59,7 +88,7 @@ export async function POST(req) {
           - You want Shahid to land a job at a good company.
           - You MUST rephrase the answer and make it more engaging and interesting.
           - Keep the answer short and concise.
-          - You can answer simple greeting questions in one line.`
+          - You can answer simple greeting questions in one line.`,
       },
     ],
   };

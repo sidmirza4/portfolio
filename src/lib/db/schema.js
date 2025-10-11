@@ -19,7 +19,7 @@ export const chunks = pgTable('chunks', {
   id: uuid('id').primaryKey().defaultRandom(),
   documentId: uuid('document_id').references(() => documents.id, { onDelete: 'cascade' }),
   content: text('content').notNull(), // actual text chunk
-  embedding: vector(1024)('embedding').notNull(), // vector for text-embedding-3-small models
+  embedding: vector(1536)('embedding').notNull(), // vector for text-embedding-3-small models
   section: text('section'), // optional, like "Projects", "Experience"
   position: text('position'), // optional ordering info (string for flexibility)
   metadata: jsonb('metadata'), // e.g., {"project": "AI Chatbot"}

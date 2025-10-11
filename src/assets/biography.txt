@@ -1,11 +1,21 @@
-Hi, I’m Shahid — a full stack software engineer with more than four years of experience building web applications that actually make a difference.
-Right now, I work at Delhivery in Gurugram, where I’ve led the development of several applications that boosted revenue and made life easier for users. One of my favorite wins there was creating a UI component library that’s now used across dozens of apps — it’s saved weeks of development time and keeps everything consistent. I’m also pretty big on writing clean, efficient code and I enjoy mentoring junior developers to help them level up.
+My full name is Muhammad Shahid but people call me Shahid or Sid. I am a frontend-heavy full stack developer with 4+ years of experience building scalable web applications.
 
-Before Delhivery, I was at Uolo EdTech, where I built features to keep students engaged — including the “Code Garage” module, which turned out to be a huge hit.
-And before that, at Nawvel in Delhi, I worked on everything from speeding up websites with server-side rendering to optimizing backend APIs so they ran lightning fast. I’ve deployed plenty of projects to AWS too, making sure they’re reliable and cost-efficient.
+I am currently working at Delhivery as a Senior Software Engineer, where I lead the development of several critical applications that have significantly boosted revenue and improved user experience. One of my major achievements was creating a comprehensive UI component library that's now used across dozens of applications, saving weeks of development time and ensuring design consistency across the platform.
 
-Outside of work, I’ve done freelance projects for folks like Kyle Cook (you might know him from YouTube) and helped improve platforms like Maility by making them faster and more reliable.
+Before joining Delhivery, I worked at Uolo EdTech as a Full Stack Developer, where I built engaging features to keep students motivated and learning. I developed the popular "Code Garage" module that became a huge hit among students, helping them learn programming through interactive challenges and projects.
 
-Tech-wise, I’m fluent in TypeScript, JavaScript, Python, and C. I work a lot with Next.js, React, Node.js, MongoDB, and AWS — basically, if it’s modern web development, I’m probably into it.
+My first company was Nawvel in Delhi, where I started as an Intern and spent more than 1.5 years growing into a full-stack developer role. At Nawvel, I worked on everything from speeding up websites with server-side rendering to optimizing backend APIs for lightning-fast performance. I've deployed numerous projects to AWS, ensuring they're reliable, scalable, and cost-efficient.
 
-When I’m not coding, I’m usually in one of my other happy places — gaming (especially on PC), building custom rigs, or cooking. I love experimenting in the kitchen and can whip up everything from classic Indian dishes to fresh Italian pastas. For me, tech is my profession, but creativity — whether in code, games, or food — is what really drives me.
+Outside of my full-time work, I've done freelance projects for various clients including Kyle Cook (you might know him from YouTube) and helped improve platforms like Maility by making them faster and more reliable. These projects have given me exposure to different industries and helped me develop strong client communication skills.
+
+Tech-wise, I'm fluent in TypeScript, JavaScript, Python, and C. I work extensively with Next.js, React, Node.js, MongoDB, and AWS. I'm also proficient in modern development tools like Docker, Kubernetes, and have experience with microservices architecture. I'm comfortable with both SQL and NoSQL databases, and I've worked with PostgreSQL, MySQL, and Redis.
+
+I have strong experience in DevOps practices, including CI/CD pipelines, automated testing, and monitoring. I've implemented comprehensive testing strategies using Jest, Cypress, and Playwright to ensure code quality and reliability.
+
+When I'm not coding, I'm usually in one of my other happy places — gaming (especially on PC), building custom rigs, or cooking. I love experimenting in the kitchen and can whip up everything from classic Indian dishes to fresh Italian pastas. I believe that creativity in any form — whether in code, games, or food — is what really drives innovation.
+
+I'm currently pursuing my interest in AI and machine learning, exploring how these technologies can be integrated into web applications to create more intelligent and user-friendly experiences. I've been working on personal projects involving natural language processing and computer vision.
+
+I'm passionate about mentoring junior developers and helping them level up their skills. I believe in writing clean, maintainable code and following best practices. I'm always looking to learn new technologies and stay up-to-date with the latest trends in web development.
+
+My goal is to continue growing as a developer while contributing to meaningful projects that make a real difference in people's lives. I'm particularly interested in opportunities that allow me to work with cutting-edge technologies and solve complex problems.
