@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Hero, About, Featured, Projects, Contact } from '@components';
+import { resumeDocId } from '@config';
 import Work from '../components/Work';
 import { fetchResumeData } from '../utils/parseResume';
-import { resumeDocId } from '@config';
 
 const StyledMainContainer = styled.section`
   width: 100%;
@@ -24,6 +25,10 @@ const IndexPage = ({ experienceData }) => (
     <Contact />
   </StyledMainContainer>
 );
+
+IndexPage.propTypes = {
+  experienceData: PropTypes.arrayOf(PropTypes.shape({})),
+};
 
 export async function getStaticProps() {
   // Fetch dynamic experience data using Google Doc ID from the config file

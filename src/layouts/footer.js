@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Icon } from '@components/Icons';
 import { socialMedia } from '@config';
 import { srConfig } from '@config/sr';
-import { StyledFooter, StyledSocialLinks, StyledCredit } from './styles';
+import { StyledFooter, StyledSocialLinks } from './styles';
 
 const Footer = () => {
   const revealContainer = useRef(null);
