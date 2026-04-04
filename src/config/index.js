@@ -19,7 +19,8 @@ module.exports = {
   ],
 
   resumeDocId: '1e8waNEN4c_pKlEKN_CnOMgSZ-BWGnwqWQ45x7d5JNws',
-  resumeLink: 'https://drive.google.com/file/d/1JMv4wnFNhx5ZHFiObLbrWWi2U6v0nCcL/view?usp=drive_link',
+  resumeLink:
+    'https://drive.google.com/file/d/1JMv4wnFNhx5ZHFiObLbrWWi2U6v0nCcL/view?usp=drive_link',
   navLinks: [
     {
       name: 'About',

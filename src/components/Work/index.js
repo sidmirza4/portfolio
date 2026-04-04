@@ -3,6 +3,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable max-len */
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { srConfig } from '@config/sr';
 import styled from 'styled-components';
 import { NumberedHeading } from '@common/styles'; // Import your numbered heading component
@@ -47,8 +48,6 @@ const Company = styled.div`
   }
 `;
 
-
-
 const ResumeButton = styled.a`
   ${({ theme }) => theme.mixins.bigButton};
   font-size: ${(props) => props.theme.fontSize.sm};
@@ -82,6 +81,17 @@ const Work = ({ experienceData = [] }) => {
       <ResumeButton onClick={handleClickResume}>Full resume</ResumeButton>
     </section>
   );
+};
+
+Work.propTypes = {
+  experienceData: PropTypes.arrayOf(
+    PropTypes.shape({
+      company: PropTypes.string,
+      role: PropTypes.string,
+      duration: PropTypes.string,
+      bullets: PropTypes.arrayOf(PropTypes.string),
+    }),
+  ),
 };
 
 export default Work;

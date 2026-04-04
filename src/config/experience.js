@@ -1,10 +1,11 @@
+/* eslint-disable max-len */
 module.exports = [
   {
     company: 'Delhivery',
     role: 'Software Engineer',
     duration: 'July 2023 - Present',
     bullets: [
-      'Built an AI-powered agent system (“OneAI”) that executes operational workflows by interacting with internal APIs, handling asynchronous processes, and notifying users with results, reducing manual effort.',
+      'Built an AI-powered agent system ("OneAI") that executes operational workflows by interacting with internal APIs, handling asynchronous processes, and notifying users with results, reducing manual effort.',
       'Designed and built a config-driven dynamic forms system using JSON, enabling flexible UI rendering and shared validation across frontend and backend, while allowing client-specific customization without code changes.',
       'Built and shipped 30+ features across 13 applications, including real-time updates using SSE and a 3D visualization feature for load planning, improving system responsiveness and user understanding.',
       'Owned end-to-end development across 5+ applications, contributing to a 33% increase in revenue by delivering scalable and reliable solutions.',
