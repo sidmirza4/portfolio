@@ -1,5 +1,6 @@
 import { IS_PRODUCTION } from '@lib/constants';
 import * as gtag from '@lib/gtag';
+import { resumeLink } from '@config';
 
 export const tint = (hex, amount) => {
   try {
@@ -55,5 +56,5 @@ export const handleClickResume = () => {
       label: 'user clicked on resume button',
     });
   }
-  window.open('/resume.pdf', '_blank');
+  window.open(resumeLink, '_blank');
 };

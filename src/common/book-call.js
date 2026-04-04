@@ -21,7 +21,7 @@ const BookACall = () => {
       type="button"
       className="email-link"
     >
-      Book a Call
+      Book a call
     </button>
   );
 };

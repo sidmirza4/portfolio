@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { navLinks } from '@config';
+import { navLinks, resumeLink } from '@config';
 import { KEY_CODES } from '@lib/constants';
 import { useOnClickOutside } from '@hooks';
 import { StyledMenu, StyledHamburgerButton, StyledSidebar } from './styles';
@@ -108,12 +108,13 @@ const Menu = () => {
                     <Link href={url}>{name}</Link>
                   </li>
                 ))}
+                <li>
+                  <a href={resumeLink} target="_blank" rel="noreferrer">
+                    Resume
+                  </a>
+                </li>
               </ol>
             )}
-            {/* 
-            <a href="/resume.pdf" className="resume-link">
-              Resume
-            </a> */}
           </nav>
         </StyledSidebar>
       </div>
