@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Hero, About, Featured, Projects, Contact } from '@components';
 import Work from '../components/Work';
+import { fetchResumeData } from '../utils/parseResume';
+import { resumeDocId } from '@config';
 
 const StyledMainContainer = styled.section`
   width: 100%;
@@ -12,15 +14,28 @@ const StyledMainContainer = styled.section`
   }
 `;
 
-const IndexPage = () => (
+const IndexPage = ({ experienceData }) => (
   <StyledMainContainer className="fillHeight">
     <Hero />
     <About />
-    <Work />
+    <Work experienceData={experienceData} />
     <Featured />
     <Projects />
     <Contact />
   </StyledMainContainer>
 );
+
+export async function getStaticProps() {
+  // Fetch dynamic experience data using Google Doc ID from the config file
+  const experienceData = await fetchResumeData(resumeDocId);
+
+  return {
+    props: {
+      experienceData,
+    },
+    // Next.js ISR: Re-fetch and regenerate page every 24 hours automatically!
+    revalidate: 86400,
+  };
+}
 
 export default IndexPage;

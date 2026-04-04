@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { navLinks } from '@config';
+import { navLinks, resumeLink } from '@config';
 import { LOADER_DELAY, IS_PRODUCTION } from '@lib/constants';
 import { useScrollDirection } from '@hooks';
 import { Menu } from '@components';
@@ -44,7 +44,7 @@ const Nav = ({ isHome }) => {
         label: 'user clicked on resume button',
       });
     }
-    window.open('/resume.pdf', '_blank');
+    window.open(resumeLink, '_blank');
   };
 
   return (

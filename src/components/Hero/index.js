@@ -18,14 +18,14 @@ const Hero = () => {
   const two = <StyledBigTitle>Mohd Shahid.</StyledBigTitle>;
   const three = (
     <StyledSubTitle slate>
-      I craft high-performance web & mobile apps that drive results.
+      I build production-grade web apps and AI-powered systems that solve real problems.
     </StyledSubTitle>
   );
   const four = (
     <p>
-      I&apos;m a full-stack engineer who builds scalable applications designed to enhance user
-      experiences, improve efficiency, and optimize costs—helping businesses grow and operate
-      smarter.
+      Frontend-focused engineer shipping React, Next.js, and TypeScript at scale — recently going
+      deep on AI agents and automation workflows. Looking to build something or need an extra pair
+      of hands? Let&apos;s talk.
     </p>
   );
   const five = <BookACall />;

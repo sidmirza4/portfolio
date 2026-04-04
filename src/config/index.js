@@ -3,10 +3,10 @@ import featuredProjects from './featured';
 import projects from './projects';
 
 module.exports = {
-  email: 'sidmirza4@gmail.com',
+  email: 'me@sidmirza.com',
   featuredProjects,
   projects,
-  skills: ['Next.js', 'ReactJS', 'Typescript', 'AWS', 'Node.js', 'Python'],
+  skills: ['TypeScript', 'React', 'Next.js', 'AI Agents', 'Node.js', 'Python'],
   socialMedia: [
     {
       name: 'GitHub',
@@ -18,6 +18,8 @@ module.exports = {
     },
   ],
 
+  resumeDocId: '1e8waNEN4c_pKlEKN_CnOMgSZ-BWGnwqWQ45x7d5JNws',
+  resumeLink: 'https://drive.google.com/file/d/1JMv4wnFNhx5ZHFiObLbrWWi2U6v0nCcL/view?usp=drive_link',
   navLinks: [
     {
       name: 'About',

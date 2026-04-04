@@ -16,6 +16,10 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
+  const startDate = new Date('2021-04-01');
+  const diffInMs = new Date() - startDate;
+  const experienceYears = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365.25));
+
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
       <NumberedHeading>About Me</NumberedHeading>
@@ -23,19 +27,18 @@ const About = () => {
       <StyledText>
         <Column gap={6}>
           <p>
-            Hello! I&apos;m Shahid, a Full Stack Software Engineer with 4+ years of experience
-            building scalable, high-impact web applications that drive business growth.
+            Hello! I&apos;m Shahid, a Frontend-focused Software Engineer with {experienceYears}+ years of experience building 
+            production-grade web applications and AI-powered systems.
           </p>
           <p>
-            I specialize in crafting performant, user-centric solutions using modern technologies
-            like React, Next.js, Node.js, and AWS. My work has directly contributed to a 30%+
-            revenue increase for Delhivery by delivering scalable applications tailored to client
-            needs.
+            I have deep expertise in TypeScript, React, and Next.js, with hands-on experience designing 
+            and shipping AI agents, automation workflows, and backend APIs. My work involves owning end-to-end 
+            development, from config-driven dynamic forms to deploying AI agents that reduce manual effort.
           </p>
           <p>
-            Whether it&apos;s building reusable UI component libraries, optimizing server response
-            times, or deploying cost-effective cloud solutions, I thrive on solving complex problems
-            and delivering results that matter.
+            Whether it&apos;s building reusable UI component libraries, integrating LLMs to perform automated PR reviews, 
+            or architecting scalable cloud solutions, I love delivering tailored applications that have a 
+            high impact.
           </p>
           <br />
           <p>Here are a few technologies I&apos;ve been working with recently:</p>
