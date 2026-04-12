@@ -5,6 +5,8 @@ import { sql } from 'drizzle-orm';
 import db from '../../../lib/db/index';
 import { chunks } from '../../../lib/db/schema';
 
+const MODEL_NAME = "google/gemini-3.1-flash-lite-preview"
+
 // const getTopChunks = async (queryEmbedding, topN = 5) => {
 //   const result = await db
 //     .select()
@@ -95,7 +97,7 @@ export async function POST(req) {
   const updatedMessages = [systemMessage, ...messages];
 
   const result = streamText({
-    model: gateway('openai/gpt-5-mini'),
+    model: gateway(MODEL_NAME),
     messages: convertToModelMessages(updatedMessages),
   });
   return result.toUIMessageStreamResponse();
