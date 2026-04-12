@@ -29,13 +29,15 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   const [inputValue, setInputValue] = useState('');
   const [chatState, setChatState] = useState('empty');
   const [tempLoadingMessage, setTempLoadingMessage] = useState(null);
+  const assistantCountAtSend = useRef(0);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatRef = useRef(null);
 
   // AI Chat integration
   const { messages, sendMessage, error, status, regenerate } = useChat();
-  const isStreaming = status === 'streaming';
+  // In v6, status is: 'ready' | 'submitted' | 'streaming' | 'error'
+  const isLoading = status === 'submitted' || status === 'streaming';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -43,7 +45,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages.length, error]);
+  }, [messages, error]);
 
   useEffect(() => {
     if (isOpen && chatRef.current) {
@@ -62,8 +64,6 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
     if (error) {
       setChatState('error');
       setTempLoadingMessage(null);
-    } else if (status === 'loading' && messages.length === 0) {
-      setChatState('loading');
     } else if (messages.length === 0) {
       setChatState('empty');
     } else {
@@ -71,14 +71,22 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
     }
   }, [error, status, messages.length]);
 
+  // Clear temp loading message once a NEW assistant message appears
   useEffect(() => {
-    if (tempLoadingMessage && messages.some((msg) => msg.role === 'assistant')) {
+    if (!tempLoadingMessage) return;
+
+    const currentAssistantCount = messages.filter((msg) => msg.role === 'assistant').length;
+    // A new assistant message has appeared since we started loading
+    if (currentAssistantCount > assistantCountAtSend.current) {
       setTempLoadingMessage(null);
     }
   }, [messages, tempLoadingMessage]);
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || isStreaming) return;
+    if (!inputValue.trim() || isLoading) return;
+
+    // Remember how many assistant messages exist right now
+    assistantCountAtSend.current = messages.filter((msg) => msg.role === 'assistant').length;
 
     // Create temporary loading message immediately
     setTempLoadingMessage({
@@ -127,10 +135,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             <Bot size={20} />
           </Avatar>
           <HeaderInfo>
-            <HeaderTitle>
-              Hello, I&apos;m
-              {BOT_NAME}
-            </HeaderTitle>
+            <HeaderTitle>{BOT_NAME}</HeaderTitle>
             <HeaderSubtitle>Shahid&apos;s personal AI assistant</HeaderSubtitle>
           </HeaderInfo>
           <HeaderActions>
@@ -151,7 +156,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             />
           )}
 
-          {(chatState === 'empty' || chatState === 'loading' || chatState === 'error') && (
+          {(chatState === 'empty' || chatState === 'error') && (
             <ChatStates
               state={chatState}
               onRetry={handleRetry}
@@ -176,7 +181,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
             </InputContainer>
             <SendButton
               onClick={handleSendMessage}
-              disabled={!inputValue.trim() || isStreaming || tempLoadingMessage !== null}
+              disabled={!inputValue.trim() || isLoading || tempLoadingMessage !== null}
               aria-label="Send message"
             >
               <Send size={16} />

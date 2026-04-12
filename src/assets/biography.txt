@@ -1,33 +1,74 @@
-My full name is Muhammad Shahid but people call me Shahid or Sid. I am a frontend-heavy full stack developer with 4+ years of experience building scalable web applications.
+Shahid is a fullstack software engineer with 5 years of experience building scalable web applications and AI-powered systems using TypeScript, Next.js, React, Node.js, and Python.
+Shahid currently works at Delhivery as a Software Engineer, where he builds production-grade systems that improve operational efficiency and drive business impact.
+At Delhivery, Shahid built an AI agent system called OneAI that orchestrates multi-step operational workflows by interacting with internal APIs and handling asynchronous execution.
+The OneAI system acts as a natural language interface over internal systems, allowing users to query operational data such as plan history, order volumes, and load creation without relying on dashboards.
+Shahid designed the AI agent to translate user queries into structured API calls and data retrieval operations, enabling real-time analytics and workflow execution.
+The AI system built by Shahid significantly reduced manual intervention in operational processes and improved turnaround time for internal workflows.
+Shahid also developed a PR review AI agent that analyzes code changes, enforces engineering guidelines, and ensures backward compatibility, improving code quality and reducing review cycles.
+Shahid has experience building LLM-powered workflows and integrating large language models into real-world systems for automation and decision-making.
+Shahid built an AI vs Real Image Detector using a CLIP-ViT model, achieving 89% accuracy and 0.90 AUC on cross-dataset evaluation.
+The image classification system included dataset curation, preprocessing, model training, and evaluation to ensure strong generalization across different datasets.
+Shahid has hands-on experience with AI concepts such as LLM APIs, prompt engineering, agent workflows, and multi-step reasoning systems.
+Shahid built an automated job discovery and application system using n8n and LLMs, which scrapes jobs, scores them based on relevance, generates resumes, and sends notifications.
+The automation system designed by Shahid demonstrates practical use of AI in real-world decision-making workflows and end-to-end system design.
+Shahid is experienced in building fullstack applications using React, Next.js, Node.js, and modern backend architectures.
+Shahid has strong experience designing and building REST APIs and scalable backend systems using Node.js and NestJS.
+Shahid's email is me@sidmirza.com and his LinkedIn is https://linkedin.com/in/sidmirza4.
+Shahid has worked extensively with databases including MongoDB, PostgreSQL, MySQL, and Redis, and understands both SQL and NoSQL systems.
+Shahid has deployed and managed applications on AWS, focusing on reliability, scalability, and cost optimization.
+At Nawvel, Shahid reduced infrastructure costs by around 70% by simplifying architecture and removing unnecessary container overhead.
+Shahid has experience with Docker, containerized environments, and modern DevOps practices including CI/CD pipelines and automated testing.
+Shahid has implemented testing strategies using tools like Jest, Cypress, and Playwright to ensure code quality and reliability.
+At Delhivery, Shahid contributed to systems that led to a 33% increase in revenue by delivering scalable and reliable applications.
+You can contact Shahid via email at me@sidmirza.com or via LinkedIn at https://linkedin.com/in/sidmirza4.
+Shahid built a shared UI component library used across multiple applications, improving development speed and maintaining design consistency.
+At Uolo EdTech, Shahid developed a Code Garage module that allows users to create, store, and share code snippets, enabling collaborative learning and content reuse.
+Shahid has experience working across the full development lifecycle, from system design and backend APIs to frontend UI and deployment.
+Shahid is comfortable working in distributed teams and collaborating with product managers, designers, and data/ML engineers.
+Shahid has strong problem-solving skills and focuses on building practical systems that solve real-world problems.
+Shahid is particularly interested in building AI-powered systems that combine automation, data retrieval, and intelligent decision-making.
+Shahid enjoys working on systems where AI is deeply integrated into product workflows rather than used as a standalone feature.
+Shahid has experience building event-driven systems and handling asynchronous workflows in production environments.
+Shahid is fluent in TypeScript, JavaScript, and Python, and is comfortable working across both frontend and backend systems.
+Shahid focuses on writing clean, maintainable code and follows best practices for scalable system design.
+Shahid has mentored junior developers and contributed to improving engineering standards within teams.
+To reach Shahid, use email me@sidmirza.com or his LinkedIn profile https://linkedin.com/in/sidmirza4.
+Shahid is actively exploring advanced AI patterns such as agentic workflows, multi-step reasoning, and system orchestration.
+Shahid is interested in roles that involve building AI-powered products, automation systems, and scalable fullstack applications.
+Shahid prefers working on impactful systems where engineering decisions directly affect business outcomes and user experience.
+Shahid enjoys gaming on PC in his free time and often explores different genres, which helps him think strategically and improve problem-solving skills.
+Shahid is passionate about building custom PC setups and enjoys understanding hardware as much as software.
+Shahid enjoys cooking and experimenting in the kitchen, especially making Indian and Italian dishes.
+For Shahid, creativity is important not just in coding but also in hobbies like gaming and cooking, which keeps him motivated and curious.
+Shahid prefers working on practical problems where engineering directly impacts users and business outcomes rather than purely theoretical work.
+Shahid enjoys building systems end-to-end, from backend APIs to frontend interfaces, and prefers owning features completely.
+Shahid is particularly interested in systems where AI is deeply integrated into workflows instead of being just an add-on feature.
+Shahid values writing clean, maintainable code and focuses on long-term scalability rather than quick fixes.
+Shahid is motivated by opportunities where he can work on cutting-edge technologies like AI while solving real-world problems.
+Shahid aims to grow as an engineer by building impactful systems and continuously improving his understanding of AI and system design.
+Shahid is interested in working with teams that value ownership, fast iteration, and strong engineering culture.
+Shahid communicates clearly and prefers simple, direct explanations over overly complex or jargon-heavy communication.
+Shahid consistently performed well academically and graduated with a high CGPA, reflecting strong discipline and learning ability.
+Shahid has a strong foundation in computer science fundamentals including data structures, algorithms, and system design.
+Shahid holds a Bachelor of Technology (B.Tech) degree from Jamia Millia Islamia with a CGPA of 8.99/10.
+During his academic journey, Shahid developed a strong interest in problem-solving and software engineering, which laid the foundation for his career in fullstack development.
+IMPORTANT: Shahid's contact information: Email: me@sidmirza.com; LinkedIn: https://linkedin.com/in/sidmirza4; Users can also book a call using the "Book a call" button on the portfolio.
 
-I am currently working at Delhivery as a Senior Software Engineer, where I lead the development of several critical applications that have significantly boosted revenue and improved user experience. One of my major achievements was creating a comprehensive UI component library that's now used across dozens of applications, saving weeks of development time and ensuring design consistency across the platform.
+Q&A
+Question: Can you tell me about Shahid?
+Answer: Shahid is a fullstack engineer with around 5 years of experience building scalable web applications and AI-powered systems. He has worked on production AI agents, automation workflows, and fullstack systems using Next.js, TypeScript, React, Node.js, and modern backend architectures.
 
-Before joining Delhivery, I worked at Uolo EdTech as a Full Stack Developer, where I built engaging features to keep students motivated and learning. I developed the popular "Code Garage" module that became a huge hit among students, helping them learn programming through interactive challenges and projects.
+Question: What kind of AI work has Shahid done?
+Answer: Shahid has built AI systems in production, including an AI agent at Delhivery that orchestrates workflows and provides natural language access to operational data. He has also worked on LLM-based automation workflows and trained a CLIP-based model for image classification.
 
-My first company was Nawvel in Delhi, where I started as an Intern and spent more than 1.5 years growing into a full-stack developer role. At Nawvel, I worked on everything from speeding up websites with server-side rendering to optimizing backend APIs for lightning-fast performance. I've deployed numerous projects to AWS, ensuring they're reliable, scalable, and cost-efficient.
+Question: What technologies does Shahid work with?
+Answer: Shahid works with TypeScript, JavaScript, Python, React, Next.js, Node.js, and modern backend systems. He also has experience with LLM APIs, automation workflows, and cloud platforms like AWS.
 
-Outside of my full-time work, I've done freelance projects for various clients including Kyle Cook (you might know him from YouTube) and helped improve platforms like Maility by making them faster and more reliable. These projects have given me exposure to different industries and helped me develop strong client communication skills.
+Question: What does Shahid do outside of work?
+Answer: Shahid enjoys gaming on PC, building custom rigs, and cooking. He likes experimenting with different cuisines and sees creativity as something that connects both his personal and professional life.
 
-Tech-wise, I'm fluent in TypeScript, JavaScript, Python, and C. I work extensively with Next.js, React, Node.js, MongoDB, and AWS. I'm also proficient in modern development tools like Docker, Kubernetes, and have experience with microservices architecture. I'm comfortable with both SQL and NoSQL databases, and I've worked with PostgreSQL, MySQL, and Redis.
+Question: What kind of work does Shahid enjoy?
+Answer: Shahid enjoys working on systems where AI is deeply integrated into workflows and where engineering decisions have a direct impact on users and business outcomes.
 
-I have strong experience in DevOps practices, including CI/CD pipelines, automated testing, and monitoring. I've implemented comprehensive testing strategies using Jest, Cypress, and Playwright to ensure code quality and reliability.
-
-When I'm not coding, I'm usually in one of my other happy places — gaming (especially on PC), building custom rigs, or cooking. I love experimenting in the kitchen and can whip up everything from classic Indian dishes to fresh Italian pastas. I believe that creativity in any form — whether in code, games, or food — is what really drives innovation.
-
-I'm currently pursuing my interest in AI and machine learning, exploring how these technologies can be integrated into web applications to create more intelligent and user-friendly experiences. I've been working on personal projects involving natural language processing and computer vision.
-
-I'm passionate about mentoring junior developers and helping them level up their skills. I believe in writing clean, maintainable code and following best practices. I'm always looking to learn new technologies and stay up-to-date with the latest trends in web development.
-
-My goal is to continue growing as a developer while contributing to meaningful projects that make a real difference in people's lives. I'm particularly interested in opportunities that allow me to work with cutting-edge technologies and solve complex problems.
-
-Hi, I’m Shahid — a full stack software engineer with more than four years of experience building web applications that actually make a difference.
-Right now, I work at Delhivery in Gurugram, where I’ve led the development of several applications that boosted revenue and made life easier for users. One of my favorite wins there was creating a UI component library that’s now used across dozens of apps — it’s saved weeks of development time and keeps everything consistent. I’m also pretty big on writing clean, efficient code and I enjoy mentoring junior developers to help them level up.
-
-Before Delhivery, I was at Uolo EdTech, where I built features to keep students engaged — including the “Code Garage” module, which turned out to be a huge hit.
-And before that, at Nawvel in Delhi, I worked on everything from speeding up websites with server-side rendering to optimizing backend APIs so they ran lightning fast. I’ve deployed plenty of projects to AWS too, making sure they’re reliable and cost-efficient.
-
-Outside of work, I’ve done freelance projects for folks like Kyle Cook (you might know him from YouTube) and helped improve platforms like Maility by making them faster and more reliable.
-
-Tech-wise, I’m fluent in TypeScript, JavaScript, Python, and C. I work a lot with Next.js, React, Node.js, MongoDB, and AWS — basically, if it’s modern web development, I’m probably into it.
-
-When I’m not coding, I’m usually in one of my other happy places — gaming (especially on PC), building custom rigs, or cooking. I love experimenting in the kitchen and can whip up everything from classic Indian dishes to fresh Italian pastas. For me, tech is my profession, but creativity — whether in code, games, or food — is what really drives me.
+Question: How can someone contact Shahid?
+Answer: Shahid can be contacted via email at me@sidmirza.com or through his LinkedIn profile at https://linkedin.com/in/sidmirza4. You can also use the "Book a call" option available on his portfolio.

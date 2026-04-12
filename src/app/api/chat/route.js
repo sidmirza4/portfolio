@@ -1,23 +1,17 @@
-import { gateway } from '@ai-sdk/gateway';
-import { streamText, convertToModelMessages, embed } from 'ai';
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { streamText, convertToModelMessages, embed, smoothStream } from 'ai';
 
 import { sql } from 'drizzle-orm';
 import db from '../../../lib/db/index';
 import { chunks } from '../../../lib/db/schema';
 
-const MODEL_NAME = "google/gemini-3.1-flash-lite-preview"
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
 
-// const getTopChunks = async (queryEmbedding, topN = 5) => {
-//   const result = await db
-//     .select()
-//     .from(chunks)
-//     .orderBy(sql`1 - (embedding <=> ${JSON.stringify(queryEmbedding)}::vector)`)
-//     .limit(topN);
+const MODEL_NAME = 'google/gemini-3.1-flash-lite-preview';
 
-//   return result;
-// };
-
-async function getSimilarChunks(queryEmbedding, topN = 3) {
+async function getSimilarChunks(queryEmbedding, topN = 5) {
   try {
     // Convert the embedding array to string format to match what we stored
     const embeddingString = `[${queryEmbedding.join(',')}]`;
@@ -37,7 +31,7 @@ async function getSimilarChunks(queryEmbedding, topN = 3) {
 
 async function getQueryEmbedding(text) {
   const { embedding } = await embed({
-    model: gateway.textEmbeddingModel('openai/text-embedding-3-small'),
+    model: openrouter.textEmbeddingModel('openai/text-embedding-3-small'),
     value: text,
   });
   return embedding;
@@ -57,48 +51,64 @@ export async function POST(req) {
   const lastMessage = messages[messages.length - 1];
   const queryText = lastMessage.parts?.[0]?.text || lastMessage.content || lastMessage.text || '';
 
-  console.log('🔍 Query text:', queryText);
+  try {
+    const queryEmbedding = await getQueryEmbedding(queryText);
+    const topChunks = await getSimilarChunks(queryEmbedding, 3);
 
-  const queryEmbedding = await getQueryEmbedding(queryText);
-  const topChunks = await getSimilarChunks(queryEmbedding, 3);
+    // Handle empty results
+    if (topChunks.length === 0) {
+      return new Response(JSON.stringify({ error: 'No relevant information found.' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  console.log('📊 Retrieved chunks:', topChunks.length);
+    const contextText = topChunks.join('\n\n');
 
-  // Handle empty results
-  if (topChunks.length === 0) {
-    return new Response(JSON.stringify({ error: 'No relevant information found.' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
+    const systemMessage = {
+      role: 'system',
+      parts: [
+        {
+          type: 'text',
+          text: `You are an AI assistant representing Shahid, a fullstack engineer with strong experience in React, Next.js, Node.js, AI systems, automation, and scalable web applications.
+            You answer questions about Shahid's experience, skills, and projects in a clear, confident, and natural tone.
+
+            Context:
+            ${contextText}
+
+            Rules:
+            - Do NOT speak in first person. Refer to Shahid in third person.
+            - Rephrase the text in profession yet impactful language.
+            - Be specific and concrete. Prefer real examples over generic statements.
+            - Highlight Shahid's strengths in AI systems, LLM workflows, and fullstack development.
+            - If relevant, mention technologies (React, Next.js, Node.js, LLM APIs, etc.).
+            - Keep answers concise (2-4 sentences).
+            - Do NOT hallucinate or invent details beyond the provided context.
+            - If unsure, say you don't have enough information.
+            - If contact information is not explicitly present in the context, do NOT generate or guess any email, LinkedIn, or GitHub links.
+            
+            Goal:
+            - Help recruiters quickly understand Shahid's strengths and why he is a strong candidate.`,
+        },
+      ],
+    };
+
+    const updatedMessages = [systemMessage, ...messages];
+
+    const result = streamText({
+      model: openrouter.chat(MODEL_NAME),
+      messages: await convertToModelMessages(updatedMessages),
+      experimental_transform: smoothStream(),
     });
-  }
-
-  const contextText = topChunks.join('\n\n');
-  console.log('📝 Context length:', contextText.length);
-
-  const systemMessage = {
-    role: 'system',
-    parts: [
+    return result.toUIMessageStreamResponse();
+  } catch (err) {
+    console.error('Chat API error:', err.message);
+    return new Response(
+      JSON.stringify({ error: 'Service temporarily unavailable. Please try again.' }),
       {
-        type: 'text',
-        text: `You are Shahid's personal portfolio assistant. Use ONLY the following biography chunks to answer questions:\n${contextText}
-        Rules:
-          - You answer in first person, as if Shahid is speaking.
-          - You answer in a way that is consistent with the biography chunks.
-          - You are very careful with your answers, you never make up information and you always stick to the facts.
-          - You are very helpful and friendly.
-          - You want Shahid to land a job at a good company.
-          - You MUST rephrase the answer and make it more engaging and interesting.
-          - Keep the answer short and concise.
-          - You can answer simple greeting questions in one line.`,
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
       },
-    ],
-  };
-
-  const updatedMessages = [systemMessage, ...messages];
-
-  const result = streamText({
-    model: gateway(MODEL_NAME),
-    messages: convertToModelMessages(updatedMessages),
-  });
-  return result.toUIMessageStreamResponse();
+    );
+  }
 }

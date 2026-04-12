@@ -22,10 +22,7 @@ const ChatStates = ({ state, onRetry, onChipClick, className }) => {
         <Avatar>
           <Bot size={32} />
         </Avatar>
-        <Title>
-          Welcome to
-          {BOT_NAME}
-        </Title>
+        <Title>Hello, I am {BOT_NAME}</Title>
         <Description>
           I&apos;m Shahid&apos;s AI assistant. I can help you learn about his projects, skills, and
           experience. Get started with one of these suggestions:

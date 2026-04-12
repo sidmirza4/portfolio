@@ -1,55 +1,31 @@
 import { embed } from 'ai';
-import { gateway } from '@ai-sdk/gateway';
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { sql } from 'drizzle-orm';
 import { documents, chunks } from './schema.js';
 import db from './index.js';
 
-const biographyPath = path.join(process.cwd(), 'src', 'assets', 'biography.txt');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const biographyPath = path.resolve(__dirname, '../../assets/biography.txt');
 const biography = fs.readFileSync(biographyPath, 'utf8').trim();
 
-// --- Helper to split text into manageable chunks ---
-function chunkText(text, maxLength = 1000) {
-  // Split by lines first, then by sentences
-  const lines = text
+function chunkText(text) {
+  return text
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
-
-  const result = lines.reduce(
-    (acc, line) => {
-      const testChunk = acc.current ? `${acc.current} ${line}` : line;
-
-      if (testChunk.length > maxLength) {
-        if (acc.current) {
-          acc.chunksArr.push(acc.current.trim());
-          acc.current = line;
-        } else {
-          // If even a single line is too long, split it
-          acc.chunksArr.push(line.substring(0, maxLength));
-          acc.current = line.substring(maxLength);
-        }
-      } else {
-        acc.current = testChunk;
-      }
-
-      return acc;
-    },
-    { chunksArr: [], current: '' },
-  );
-
-  if (result.current) {
-    result.chunksArr.push(result.current.trim());
-  }
-
-  return result.chunksArr;
 }
 
-// --- Generate embedding using Vercel AI SDK ---
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
+
+// --- Generate embedding using OpenRouter ---
 const getEmbedding = async (text) => {
   const { embedding } = await embed({
-    model: gateway.textEmbeddingModel('openai/text-embedding-3-small'),
+    model: openrouter.textEmbeddingModel('openai/text-embedding-3-small'),
     value: text,
   });
   return embedding;
