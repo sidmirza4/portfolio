@@ -1,0 +1,74 @@
+Shahid is a fullstack software engineer with 5 years of experience building scalable web applications and AI-powered systems using TypeScript, Next.js, React, Node.js, and Python.
+Shahid currently works at Delhivery as a Software Engineer, where he builds production-grade systems that improve operational efficiency and drive business impact.
+At Delhivery, Shahid built an AI agent system called OneAI that orchestrates multi-step operational workflows by interacting with internal APIs and handling asynchronous execution.
+The OneAI system acts as a natural language interface over internal systems, allowing users to query operational data such as plan history, order volumes, and load creation without relying on dashboards.
+Shahid designed the AI agent to translate user queries into structured API calls and data retrieval operations, enabling real-time analytics and workflow execution.
+The AI system built by Shahid significantly reduced manual intervention in operational processes and improved turnaround time for internal workflows.
+Shahid also developed a PR review AI agent that analyzes code changes, enforces engineering guidelines, and ensures backward compatibility, improving code quality and reducing review cycles.
+Shahid has experience building LLM-powered workflows and integrating large language models into real-world systems for automation and decision-making.
+Shahid built an AI vs Real Image Detector using a CLIP-ViT model, achieving 89% accuracy and 0.90 AUC on cross-dataset evaluation.
+The image classification system included dataset curation, preprocessing, model training, and evaluation to ensure strong generalization across different datasets.
+Shahid has hands-on experience with AI concepts such as LLM APIs, prompt engineering, agent workflows, and multi-step reasoning systems.
+Shahid built an automated job discovery and application system using n8n and LLMs, which scrapes jobs, scores them based on relevance, generates resumes, and sends notifications.
+The automation system designed by Shahid demonstrates practical use of AI in real-world decision-making workflows and end-to-end system design.
+Shahid is experienced in building fullstack applications using React, Next.js, Node.js, and modern backend architectures.
+Shahid has strong experience designing and building REST APIs and scalable backend systems using Node.js and NestJS.
+Shahid's email is me@sidmirza.com and his LinkedIn is https://linkedin.com/in/sidmirza4.
+Shahid has worked extensively with databases including MongoDB, PostgreSQL, MySQL, and Redis, and understands both SQL and NoSQL systems.
+Shahid has deployed and managed applications on AWS, focusing on reliability, scalability, and cost optimization.
+At Nawvel, Shahid reduced infrastructure costs by around 70% by simplifying architecture and removing unnecessary container overhead.
+Shahid has experience with Docker, containerized environments, and modern DevOps practices including CI/CD pipelines and automated testing.
+Shahid has implemented testing strategies using tools like Jest, Cypress, and Playwright to ensure code quality and reliability.
+At Delhivery, Shahid contributed to systems that led to a 33% increase in revenue by delivering scalable and reliable applications.
+You can contact Shahid via email at me@sidmirza.com or via LinkedIn at https://linkedin.com/in/sidmirza4.
+Shahid built a shared UI component library used across multiple applications, improving development speed and maintaining design consistency.
+At Uolo EdTech, Shahid developed a Code Garage module that allows users to create, store, and share code snippets, enabling collaborative learning and content reuse.
+Shahid has experience working across the full development lifecycle, from system design and backend APIs to frontend UI and deployment.
+Shahid is comfortable working in distributed teams and collaborating with product managers, designers, and data/ML engineers.
+Shahid has strong problem-solving skills and focuses on building practical systems that solve real-world problems.
+Shahid is particularly interested in building AI-powered systems that combine automation, data retrieval, and intelligent decision-making.
+Shahid enjoys working on systems where AI is deeply integrated into product workflows rather than used as a standalone feature.
+Shahid has experience building event-driven systems and handling asynchronous workflows in production environments.
+Shahid is fluent in TypeScript, JavaScript, and Python, and is comfortable working across both frontend and backend systems.
+Shahid focuses on writing clean, maintainable code and follows best practices for scalable system design.
+Shahid has mentored junior developers and contributed to improving engineering standards within teams.
+To reach Shahid, use email me@sidmirza.com or his LinkedIn profile https://linkedin.com/in/sidmirza4.
+Shahid is actively exploring advanced AI patterns such as agentic workflows, multi-step reasoning, and system orchestration.
+Shahid is interested in roles that involve building AI-powered products, automation systems, and scalable fullstack applications.
+Shahid prefers working on impactful systems where engineering decisions directly affect business outcomes and user experience.
+Shahid enjoys gaming on PC in his free time and often explores different genres, which helps him think strategically and improve problem-solving skills.
+Shahid is passionate about building custom PC setups and enjoys understanding hardware as much as software.
+Shahid enjoys cooking and experimenting in the kitchen, especially making Indian and Italian dishes.
+For Shahid, creativity is important not just in coding but also in hobbies like gaming and cooking, which keeps him motivated and curious.
+Shahid prefers working on practical problems where engineering directly impacts users and business outcomes rather than purely theoretical work.
+Shahid enjoys building systems end-to-end, from backend APIs to frontend interfaces, and prefers owning features completely.
+Shahid is particularly interested in systems where AI is deeply integrated into workflows instead of being just an add-on feature.
+Shahid values writing clean, maintainable code and focuses on long-term scalability rather than quick fixes.
+Shahid is motivated by opportunities where he can work on cutting-edge technologies like AI while solving real-world problems.
+Shahid aims to grow as an engineer by building impactful systems and continuously improving his understanding of AI and system design.
+Shahid is interested in working with teams that value ownership, fast iteration, and strong engineering culture.
+Shahid communicates clearly and prefers simple, direct explanations over overly complex or jargon-heavy communication.
+Shahid consistently performed well academically and graduated with a high CGPA, reflecting strong discipline and learning ability.
+Shahid has a strong foundation in computer science fundamentals including data structures, algorithms, and system design.
+Shahid holds a Bachelor of Technology (B.Tech) degree from Jamia Millia Islamia with a CGPA of 8.99/10.
+During his academic journey, Shahid developed a strong interest in problem-solving and software engineering, which laid the foundation for his career in fullstack development.
+IMPORTANT: Shahid's contact information: Email: me@sidmirza.com; LinkedIn: https://linkedin.com/in/sidmirza4; Users can also book a call using the "Book a call" button on the portfolio.
+
+Q&A
+Question: Can you tell me about Shahid?
+Answer: Shahid is a fullstack engineer with around 5 years of experience building scalable web applications and AI-powered systems. He has worked on production AI agents, automation workflows, and fullstack systems using Next.js, TypeScript, React, Node.js, and modern backend architectures.
+
+Question: What kind of AI work has Shahid done?
+Answer: Shahid has built AI systems in production, including an AI agent at Delhivery that orchestrates workflows and provides natural language access to operational data. He has also worked on LLM-based automation workflows and trained a CLIP-based model for image classification.
+
+Question: What technologies does Shahid work with?
+Answer: Shahid works with TypeScript, JavaScript, Python, React, Next.js, Node.js, and modern backend systems. He also has experience with LLM APIs, automation workflows, and cloud platforms like AWS.
+
+Question: What does Shahid do outside of work?
+Answer: Shahid enjoys gaming on PC, building custom rigs, and cooking. He likes experimenting with different cuisines and sees creativity as something that connects both his personal and professional life.
+
+Question: What kind of work does Shahid enjoy?
+Answer: Shahid enjoys working on systems where AI is deeply integrated into workflows and where engineering decisions have a direct impact on users and business outcomes.
+
+Question: How can someone contact Shahid?
+Answer: Shahid can be contacted via email at me@sidmirza.com or through his LinkedIn profile at https://linkedin.com/in/sidmirza4. You can also use the "Book a call" option available on his portfolio.

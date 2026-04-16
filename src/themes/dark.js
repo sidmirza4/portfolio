@@ -3,21 +3,38 @@ import common from './common';
 const lightTheme = {
   ...common,
   bg: {
+    primary: '#EAF6FF',
     default: '#120e26',
     defaultLight: '#1a1336',
     reverse: '#F4F4F4',
+    gray: '#ECEFF1',
+    chip: '#DCE3E9 ',
+    // New chat-specific backgrounds
+    chatWidget: '#1e1a42',
+    chatHeader: '#252047',
+    chatBotMessage: '#1a1336',
+    userAvatar: '#75708a',
   },
   text: {
     default: '#F4F4F4',
     reverse: '#0A1A2F',
     accent: '#E4E7FF	',
     green: '#64ffda',
+    secondary: '#B8BCC8',
+  },
+  chat: {
+    bgLight: '#eef4fa',
+    border: '#d0dae6',
   },
   shadows: {
     default: '0 10px 30px -10px rgba(2, 12, 27, 0.7)',
     small: '0 10px 30px -10px rgba(2, 12, 27, 0.7)',
     medium: '0 20px 30px -15px rgba(2,12,27, 0.7)',
     large: '0 30px 60px rgba(0, 0, 0, 0.12) ',
+    chip: '1px 1px 8px rgba(0, 0, 0, 0.1)',
+    // New button shadows
+    button: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    buttonHover: '0 6px 20px rgba(0, 0, 0, 0.2)',
   },
 };
 
