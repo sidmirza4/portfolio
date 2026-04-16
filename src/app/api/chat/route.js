@@ -21,23 +21,6 @@ const ALLOWED_ORIGINS = [
   'http://localhost:3001',
 ];
 
-// ── Input schema ─────────────────────────────────────────────────────────────
-const MessagePartSchema = z.object({
-  type: z.string(),
-  text: z.string().max(2000),
-}).loose();
-
-const MessageSchema = z.object({
-  role: z.string(),
-  content: z.string().max(2000).optional(),
-  text: z.string().max(2000).optional(),
-  parts: z.array(MessagePartSchema).max(20).optional(),
-}).loose();
-
-const RequestSchema = z.object({
-  // allow up to 50 messages in the thread
-  messages: z.array(MessageSchema).min(1).max(50),
-});
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 async function getSimilarChunks(queryEmbedding, topN = 5) {
@@ -102,20 +85,27 @@ export async function POST(req) {
     });
   }
 
-  // 3. Validate & parse request body
+  // 3. Validate request body
   let messages;
   try {
     const body = await req.json();
-    const parsed = RequestSchema.safeParse(body);
 
-    if (!parsed.success) {
+    if (!body || !Array.isArray(body.messages) || body.messages.length === 0) {
       return new Response(JSON.stringify({ error: 'Invalid request format.' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    messages = parsed.data.messages;
+    // Allow up to 50 messages in the historical thread context
+    if (body.messages.length > 50) {
+      return new Response(JSON.stringify({ error: 'Conversation history reached maximum limit.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    messages = body.messages;
   } catch {
     return new Response(JSON.stringify({ error: 'Malformed request body.' }), {
       status: 400,
@@ -159,13 +149,23 @@ export async function POST(req) {
       parts: [
         {
           type: 'text',
-          text: `You are an AI assistant representing Shahid, a fullstack engineer with strong experience in React, Next.js, Node.js, AI systems, automation, and scalable web applications.
+          text: `You are Sera, Shahid's AI assistant. You are representing Shahid, a fullstack engineer with strong experience in React, Next.js, Node.js, AI systems, automation, and scalable web applications.
             You answer questions about Shahid's experience, skills, and projects in a clear, confident, and natural tone.
 
             Context:
             ${contextText}
 
+            STRICT RULES:
+            - Only use information that is explicitly provided.
+            - Do NOT make up facts about Shahid.
+            - If you do not know something, say:
+              "I don't have that information."
+            - Do NOT assume skills, background, or contact details.
+            - Do NOT generate fictional descriptions.
+            - If the question is too personal or not about Shahid, politely decline to answer.
+
             Rules:
+            - Answer greetings messages natually in 1-2 sentences.
             - Do NOT speak in first person. Refer to Shahid in third person.
             - Rephrase the text in profession yet impactful language.
             - Be specific and concrete. Prefer real examples over generic statements.
@@ -177,7 +177,17 @@ export async function POST(req) {
             - If contact information is not explicitly present in the context, do NOT generate or guess any email, LinkedIn, or GitHub links.
             
             Goal:
-            - Help recruiters quickly understand Shahid's strengths and why he is a strong candidate.`,
+            - Help recruiters quickly understand Shahid's strengths and why he is a strong candidate.
+            
+            Examples:
+            Question: Hi
+            Answer: Hello! I'm Sera, Shahid's AI assistant. How can I help you today?
+            
+            Question: Who are you?
+            Answer: I'm Sera, Shahid's AI assistant. I'm here to help you learn more about his experience and skills.
+            
+            Question: What is your name?
+            Answer: I'm Sera, Shahid's AI assistant.`,
         },
       ],
     };
@@ -188,6 +198,7 @@ export async function POST(req) {
       model: openrouter.chat(MODEL_NAME),
       messages: await convertToModelMessages(updatedMessages),
       maxTokens: 350,
+      temperature: 0.4,
       experimental_transform: smoothStream(),
     });
 
