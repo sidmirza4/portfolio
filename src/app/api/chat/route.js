@@ -24,18 +24,19 @@ const ALLOWED_ORIGINS = [
 // ── Input schema ─────────────────────────────────────────────────────────────
 const MessagePartSchema = z.object({
   type: z.string(),
-  text: z.string().max(400),
-});
+  text: z.string().max(2000),
+}).loose();
 
 const MessageSchema = z.object({
-  role: z.enum(['user', 'assistant']),
-  content: z.string().max(400).optional(),
-  text: z.string().max(400).optional(),
-  parts: z.array(MessagePartSchema).max(5).optional(),
-});
+  role: z.string(),
+  content: z.string().max(2000).optional(),
+  text: z.string().max(2000).optional(),
+  parts: z.array(MessagePartSchema).max(20).optional(),
+}).loose();
 
 const RequestSchema = z.object({
-  messages: z.array(MessageSchema).min(1).max(8),
+  // allow up to 50 messages in the thread
+  messages: z.array(MessageSchema).min(1).max(50),
 });
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -128,6 +129,13 @@ export async function POST(req) {
 
   if (!queryText.trim()) {
     return new Response(JSON.stringify({ error: 'No message text provided.' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (queryText.length > 500) {
+    return new Response(JSON.stringify({ error: 'Your message is too long. Please shorten it.' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
