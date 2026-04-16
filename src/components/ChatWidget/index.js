@@ -24,11 +24,76 @@ import {
   SendButton,
 } from './styles';
 
+// ── Error parser ─────────────────────────────────────────────────────────────
+// The AI SDK surfaces errors in inconsistent ways depending on the status code.
+// error.status may exist on APICallError, or the status text is embedded in error.message.
+// We check all three signals: .status, message text, and response JSON body.
+function parseApiError(error) {
+  if (!error) return null;
+
+  const status = error?.status;
+  const msg = (error?.message || '').toLowerCase();
+
+  // Try to extract a JSON error body (AI SDK sometimes puts it in responseBody or message)
+  let bodyError = '';
+  try {
+    const raw = error?.responseBody || (msg.startsWith('{') ? error.message : '');
+    bodyError = (JSON.parse(raw)?.error || '').toLowerCase();
+  } catch {
+    /* ignore */
+  }
+
+  const combined = `${msg} ${bodyError}`;
+
+  // 429 — rate limit
+  if (
+    status === 429 ||
+    combined.includes('429') ||
+    combined.includes('too many') ||
+    combined.includes('rate limit') ||
+    combined.includes('slow down') ||
+    combined.includes('limit reached') ||
+    combined.includes('daily limit') ||
+    combined.includes('hourly limit')
+  ) {
+    return "You're sending messages too quickly. Please wait a moment before trying again.";
+  }
+
+  // 403 — forbidden
+  if (status === 403 || combined.includes('403') || combined.includes('forbidden')) {
+    return 'This request was blocked. Please refresh the page and try again.';
+  }
+
+  // 503 — service unavailable
+  if (
+    status === 503 ||
+    combined.includes('503') ||
+    combined.includes('unavailable') ||
+    combined.includes('service temporarily')
+  ) {
+    return 'The assistant is temporarily unavailable. Please try again shortly.';
+  }
+
+  // 400 — bad request
+  if (
+    status === 400 ||
+    combined.includes('400') ||
+    combined.includes('invalid') ||
+    combined.includes('too long') ||
+    combined.includes("couldn't be processed")
+  ) {
+    return "Your message couldn't be processed. Please try rephrasing or shortening it.";
+  }
+
+  return 'Something went wrong. Please try again.';
+}
+
 // Main Component
 const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   const [inputValue, setInputValue] = useState('');
   const [chatState, setChatState] = useState('empty');
   const [tempLoadingMessage, setTempLoadingMessage] = useState(null);
+  const [inlineError, setInlineError] = useState(null);
   const assistantCountAtSend = useRef(0);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -45,7 +110,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, error]);
+  }, [messages, error, inlineError]);
 
   useEffect(() => {
     if (isOpen && chatRef.current) {
@@ -62,10 +127,20 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
   useEffect(() => {
     if (error) {
-      setChatState('error');
       setTempLoadingMessage(null);
+
+      if (messages.length > 0) {
+        // ── Inline error: conversation exists — show error bubble, stay in chat
+        setChatState('chat');
+        setInlineError(parseApiError(error));
+      } else {
+        // ── Full-screen error: no messages yet — show the error state screen
+        setChatState('error');
+        setInlineError(null);
+      }
     } else if (messages.length === 0) {
       setChatState('empty');
+      setInlineError(null);
     } else {
       setChatState('chat');
     }
@@ -84,6 +159,9 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
+
+    // Clear any previous inline error when user sends a new message
+    setInlineError(null);
 
     // Remember how many assistant messages exist right now
     assistantCountAtSend.current = messages.filter((msg) => msg.role === 'assistant').length;
@@ -108,11 +186,11 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
   const handleRetry = () => {
     if (messages.length === 0) {
       setChatState('empty');
+      setInlineError(null);
     } else {
       if (regenerate) {
         regenerate();
       }
-
       setChatState('chat');
     }
   };
@@ -153,6 +231,7 @@ const ChatWidget = ({ isOpen, onClose, onMinimize, className }) => {
           {chatState === 'chat' && (
             <MessageList
               messages={tempLoadingMessage ? [...messages, tempLoadingMessage] : messages}
+              inlineError={inlineError}
             />
           )}
 

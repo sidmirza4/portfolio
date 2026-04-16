@@ -192,6 +192,50 @@ export const MessageTimestamp = styled.div`
   margin-top: 0.25rem;
 `;
 
+export const ErrorBubble = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  animation: ${fadeIn} 0.3s ease-out;
+  padding: 0.1rem 0;
+`;
+
+export const ErrorBubbleContent = styled.div`
+  max-width: 70%;
+  border-radius: 1.2rem;
+  padding: 0.75rem 1rem;
+  word-break: break-word;
+  background-color: ${(p) => p.theme.bg.chatBotMessage};
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-left: 3px solid rgba(239, 68, 68, 0.6);
+  animation: ${slideIn} 0.3s ease-out;
+`;
+
+export const ErrorBubbleText = styled.p`
+  font-size: ${(p) => p.theme.fontSize.body};
+  color: rgba(252, 165, 165, 0.9);
+  margin: 0;
+  line-height: 1.4;
+`;
+
+export const ErrorBubbleIcon = styled.div`
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(252, 165, 165, 0.85);
+  flex-shrink: 0;
+
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+`;
+
 // Composer Components
 export const ComposerContainer = styled.div`
   padding: 1.6rem;

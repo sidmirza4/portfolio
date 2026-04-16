@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { User, Bot } from 'lucide-react';
+import { User, Bot, AlertTriangle } from 'lucide-react';
 import {
   MessageWrapper,
   MessageAvatar,
   MessageBubble,
   MessageText,
   MessageTimestamp,
+  ErrorBubble,
+  ErrorBubbleContent,
+  ErrorBubbleText,
+  ErrorBubbleIcon,
 } from './styles';
 import TypingIndicator from '../TypingIndicator';
 
-const MessageList = ({ messages }) => {
+const MessageList = ({ messages, inlineError }) => {
   return (
     <>
       {messages.map((message) => {
@@ -45,6 +49,18 @@ const MessageList = ({ messages }) => {
           </MessageWrapper>
         );
       })}
+
+      {/* Inline error bubble — shown after messages instead of replacing the screen */}
+      {inlineError && (
+        <ErrorBubble>
+          <ErrorBubbleIcon>
+            <AlertTriangle size={16} />
+          </ErrorBubbleIcon>
+          <ErrorBubbleContent>
+            <ErrorBubbleText>{inlineError}</ErrorBubbleText>
+          </ErrorBubbleContent>
+        </ErrorBubble>
+      )}
     </>
   );
 };
@@ -59,6 +75,7 @@ MessageList.propTypes = {
       isLoading: PropTypes.bool,
     }),
   ).isRequired,
+  inlineError: PropTypes.string,
 };
 
 export default MessageList;
