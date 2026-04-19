@@ -38,12 +38,12 @@ export const ChatWidgetContainer = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    min-width: 100vw;
-    min-height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
+    width: 100dvw !important;
+    height: 100dvh !important;
+    min-width: 100dvw;
+    min-height: 100dvh;
+    max-width: 100dvw;
+    max-height: 100dvh;
     border-radius: 0;
     transform-origin: center;
   }
